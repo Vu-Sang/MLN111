@@ -71,6 +71,7 @@ function ParallaxImage({ src, alt, speed = 0.5 }: { src: string; alt: string; sp
 
 export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home' | 'theory') => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollY, setScrollY] = useState(0);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -86,10 +87,133 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
   const heroScale = useTransform(smoothProgress, [0, 0.2], [1, 0.8]);
   const heroBlur = useTransform(smoothProgress, [0, 0.2], [0, 10]);
 
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navBgOpacity = Math.max(0, Math.min((scrollY - 300) / 200, 0.95));
+  const navVisibility = scrollY > 300 ? 1 : 0;
+  const navPointerEvents = scrollY > 300 ? 'auto' : 'none';
+  const navColor = scrollY > 350 ? 'text-gray-900' : 'text-amber-50';
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    const targetPosition = element.getBoundingClientRect().top + window.scrollY;
+    const startPosition = window.scrollY;
+    const distance = targetPosition - startPosition;
+    const duration = 1200; // milliseconds for smooth scroll
+    let start: number | null = null;
+
+    // Easing function for smooth deceleration
+    const easeInOutCubic = (t: number): number => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    const scroll = (timestamp: number) => {
+      if (start === null) start = timestamp;
+      const elapsed = timestamp - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+
+      window.scrollTo(0, startPosition + distance * ease);
+
+      if (progress < 1) {
+        requestAnimationFrame(scroll);
+      }
+    };
+
+    requestAnimationFrame(scroll);
+  };
+
   return (
     <div ref={containerRef} className="bg-gradient-to-b from-amber-50 to-orange-50 text-gray-900">
+      {/* Navigation Bar */}
+      <motion.nav
+        className="fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all duration-300"
+        style={{
+          backgroundColor: `rgba(250, 239, 221, ${navBgOpacity})`,
+          opacity: navVisibility,
+          pointerEvents: navPointerEvents as any
+        }}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {/* Logo/Brand */}
+          <motion.div
+            className="flex items-center gap-2"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="w-8 h-8 bg-gradient-to-br from-red-700 to-red-900 rounded-lg flex items-center justify-center">
+              <span className="text-amber-50 font-bold text-lg">M</span>
+            </div>
+            <span className={`font-bold text-xl transition-colors duration-300 ${navColor}`}>
+
+            </span>
+          </motion.div>
+
+          {/* Navigation Links */}
+          <div className="hidden md:flex items-center gap-8">
+            <motion.button
+              onClick={() => scrollToSection('home')}
+              className={`font-medium transition-colors duration-300 hover:text-red-700 ${navColor}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Trang chủ
+            </motion.button>
+
+            <motion.button
+              onClick={() => scrollToSection('dinh-nghia')}
+              className={`font-medium transition-colors duration-300 hover:text-red-700 ${navColor}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Định nghĩa
+            </motion.button>
+            <motion.button
+              onClick={() => scrollToSection('key-concepts')}
+              className={`font-medium transition-colors duration-300 hover:text-red-700 ${navColor}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Khái niệm
+            </motion.button>
+            <motion.button
+              onClick={() => scrollToSection('contemporary')}
+              className={`font-medium transition-colors duration-300 hover:text-red-700 ${navColor}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Mối quan hệ
+            </motion.button>
+            <motion.button
+              onClick={() => scrollToSection('cta')}
+              className={`font-medium transition-colors duration-300 hover:text-red-700 ${navColor}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Khám phá
+            </motion.button>
+          </div>
+
+          {/* Theory Button */}
+          <motion.button
+            onClick={() => onViewChange?.('theory')}
+            className="px-6 py-2 bg-gradient-to-r from-red-700 to-red-900 text-amber-50 rounded-lg font-medium flex items-center gap-2 hover:shadow-lg transition-shadow"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <BookOpen size={18} />
+            <span className="hidden sm:inline">Lý thuyết</span>
+          </motion.button>
+        </div>
+      </motion.nav>
       {/* Hero Section */}
-      <section className="h-screen relative overflow-hidden">
+      <section id="home" className="h-screen relative overflow-hidden">
         {/* Animated Background */}
         <ParallaxImage
           src={banner}
@@ -142,7 +266,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                 transition={{ duration: 0.3 }}
               >
                 <span className="text-sm uppercase tracking-[0.4em] text-[#FAEFDD]">
-                  GD1805 – Nhóm 7
+                  IB1805 – Nhóm 7
                 </span>
               </motion.div>
             </motion.div>
@@ -267,7 +391,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="text-lg font-semibold text-[#2A1E1A]">
+                <span className="text-lg font-semibold text-[#2A1E1A] ">
                   Đọc Toàn Bộ Nội Dung
                 </span>
               </motion.button>
@@ -316,7 +440,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
       </div>
 
       {/* Introduction Section */}
-      <section className="min-h-screen relative py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50">
+      <section id='dinh-nghia' className="min-h-screen relative py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             {/* Left Content */}
@@ -497,7 +621,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
       </div>
 
       {/* Key Concepts - Grid */}
-      <section className="py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50">
+      <section id="key-concepts" className="py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="mb-20">
             <motion.h2
@@ -553,15 +677,15 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-8">
                     <motion.span
-                      className="text-8xl font-black text-orange-200 group-hover:text-red-700/20 transition-colors duration-500\"
+                      className="text-8xl font-black text-[#D6C7B5] group-hover:text-red-700/20 transition-colors duration-500\"
                       whileHover={{ scale: 1.1 }}
                     >
                       {concept.number}
                     </motion.span>
                     <motion.div
-                      whileHover={{ rotate: 360, scale: 1.2 }}
+                      whileHover={{ rotate: 180, scale: 1.2 }}
                       transition={{ duration: 0.6 }}
-                      className="p-4 bg-red-700/10 group-hover:bg-red-700/20 rounded-full\"
+                      className="p-4 bg-[#7A1F1F]/10   group-hover:bg-[#7A1F1F]/20 rounded-full\"
                     >
                       <concept.icon className="w-8 h-8 text-red-700\" />
                     </motion.div>
@@ -610,7 +734,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
       </div>
 
       {/* Contemporary Relevance */}
-      <section className="relative py-32 px-6 overflow-hidden">
+      <section id="contemporary" className="relative py-32 px-6 overflow-hidden">
         <ParallaxImage
           src="https://images.unsplash.com/photo-1615800098746-73af8261e3df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aW50YWdlJTIwcGFwZXIlMjB0ZXh0dXJlfGVufDF8fHx8MTc2ODAzNzUwOXww&ixlib=rb-4.1.0&q=80&w=1080"
           alt="Vintage"
@@ -679,7 +803,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
       </div>
 
       {/* Final CTA */}
-      <section className="py-30 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50\">
+      <section id="cta" className="py-10 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50\">
         <div className="max-w-7xl mx-auto text-center">
           <AnimatedSection>
             <motion.h2
@@ -719,7 +843,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                 onClick={() => onViewChange?.('theory')}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-12 py-6 bg-red-700 text-white text-xl font-bold hover:bg-red-800 transition-colors cursor-pointer\"
+                className="px-12 py-6 bg-red-700 text-white text-xl font-bold hover:bg-red-800 transition-colors cursor-pointer\ rounded-lg"
               >
                 Đọc Toàn Bộ Lý Thuyết
               </motion.button>
@@ -727,11 +851,20 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                 onClick={() => onViewChange?.('theory')}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-12 py-6 bg-transparent border-2 border-gray-700 text-gray-900 text-xl font-bold hover:bg-gray-100 transition-colors cursor-pointer\"
+                className="px-12 py-6 bg-[#1F2937] text-white border-2 border-gray-700 text-xl font-bold hover:bg-[#111827] transition-colors duration-300 cursor-pointer rounded-lg "
               >
                 Xem Tài Liệu Tham Khảo
               </motion.button>
             </motion.div>
+            <motion.button
+              onClick={() => window.open("https://test-mln111.vercel.app/", "_blank")}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-12 py-6 bg-transparent border-2 border-gray-700 text-gray-900 text-xl font-bold hover:bg-gray-100 transition-colors cursor-pointer rounded-lg text-center mt-10 block mx-auto"
+            >
+              Hành trình đi tìm căn cước
+            </motion.button>
+
           </AnimatedSection>
         </div>
       </section>
