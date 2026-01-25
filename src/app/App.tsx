@@ -3,6 +3,7 @@ import { MarxistHomepage } from './components/marxist-homepage';
 import { TheoryContent } from './components/theory-content';
 import { ClassContent } from './components/class-content';
 import { EthnicityContent } from './components/ethnicity-content';
+import { ChatWidget } from './components/ChatWidget';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<'home' | 'theory' | 'class' | 'ethnicity'>('home');
@@ -18,6 +19,7 @@ export default function App() {
       ) : (
         <EthnicityContent onViewChange={setCurrentView} />
       )}
+      <ChatWidget />
     </div>
   );
 }
