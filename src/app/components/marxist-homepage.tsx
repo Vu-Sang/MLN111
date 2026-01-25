@@ -438,7 +438,97 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
           }}
         />
       </div>
+      {/* Key Concepts - Grid */}
+      <section id="key-concepts" className="py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection className="mb-20">
+            <motion.h2
+              className="text-6xl md:text-8xl font-black text-gray-900 mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Các Khái Niệm <span className="text-red-700">Chính</span>
+            </motion.h2>
+            <motion.div
+              className="h-1 bg-gradient-to-r from-red-700 via-red-600 to-transparent\"
+              initial={{ width: 0 }}
+              whileInView={{ width: "75%" }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
+            />
+          </AnimatedSection>
 
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                number: "01",
+                title: "Đấu tranh giai cấp",
+                description: "Là cuộc đấu tranh của các tập đoàn người to lớn có lợi ích căn bản đối lập nhau. Thực chất là cuộc đấu tranh của quần chúng bị áp bức chống lại giai cấp thống trị.",
+                icon: Users,
+                targetId: 'dinh-nghia'
+              },
+              {
+                number: "02",
+                title: "Dân tộc ",
+                description: "Dân tộc là hình thức cộng đồng người cao nhất, được hình thành trên cơ sở lãnh thổ, kinh tế, ngôn ngữ và văn hóa, trong đó kinh tế giữ vai trò quyết định.",
+                icon: TrendingUp,
+                targetId: 'cta'
+              },
+              {
+                number: "03",
+                title: "Quan hệ giữa giai cấp và dân tộc",
+                description: "Giai cấp quyết định tính chất dân tộc; giải phóng dân tộc là điều kiện để giải phóng giai cấp, và lợi ích giai cấp, dân tộc chân chính thống nhất với lợi ích nhân loại.",
+                icon: BookOpen,
+                targetId: 'contemporary'
+
+              }
+            ].map((concept, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                whileHover={{ y: -20, transition: { duration: 0.3 } }}
+                className="group relative bg-gradient-to-br from-orange-100 rounded-xl to-amber-50 p-10 border border-orange-200 hover:border-red-700 transition-all duration-500 cursor-pointer overflow-hidden shadow-sm hover:shadow-lg"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-red-700/0 to-red-700/0 group-hover:from-red-700/5 group-hover:to-transparent"
+                  transition={{ duration: 0.5 }}
+                />
+
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-8">
+                    <motion.span
+                      onClick={() => scrollToSection(concept.targetId)}
+                      className="text-8xl font-black text-[#D6C7B5] group-hover:text-red-700/20 transition-colors duration-500\"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      {concept.number}
+                    </motion.span>
+                    <motion.div
+                      onClick={() => scrollToSection(concept.targetId)}
+                      whileHover={{ rotate: 180, scale: 1.2 }}
+                      transition={{ duration: 0.6 }}
+                      className="p-4 bg-[#7A1F1F]/10   group-hover:bg-[#7A1F1F]/20 rounded-full"
+                    >
+                      <concept.icon className="w-8 h-8 text-red-700\" />
+                    </motion.div>
+                  </div>
+
+                  <h3 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-red-700 transition-colors duration-300\">
+                    {concept.title}
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed mb-6\">
+                    {concept.description}
+                  </p>
+
+
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
       {/* Introduction Section */}
       <section id='dinh-nghia' className="min-h-screen relative py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50">
         <div className="max-w-7xl mx-auto">
@@ -565,17 +655,14 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
         <div className="absolute inset-0 bg-black/90 z-10" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-950/20 to-transparent z-10" />
 
-        <div className="max-w-5xl mx-auto relative z-20">
+        <div className="max-w-7xl mx-auto relative z-20">
           <AnimatedSection>
             <motion.blockquote
-              className="text-4xl md:text-6xl lg:text-7xl font-['Lora'] italic text-white leading-[1.15] tracking-wide mb-12"
+              className="text-4xl text-center md:text-6xl lg:text-4xl font-['Times_New_Roman'] italic text-white leading-[1.4] tracking-wide mb-15"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, ease: 'easeOut' }}
-            >
-              <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" />
-              " Giai cấp là những tập đoàn người, mà tập đoàn này có thể chiếm đoạt lao động
-              của tập đoàn khác, do chỗ các tập đoàn đó có địa vị khác nhau trong một chế độ kinh tế - xã hội nhất định "
+              transition={{ duration: 1.2, ease: 'easeOut' }}            >
+              " Người ta gọi là giai cấp, những tập đoàn người to lớn gồm những người khác nhau về địa vị của họ trong một hệ thống sản xuất xã hội nhất định trong lịch sử, khác nhau về quan hệ của họ (thường thường thì những quan hệ này được pháp luật quy định và thừa nhận) đối với những tư liệu sản xuất, về vai trò của họ trong tổ chức lao động xã hội, và như vậy là khác nhau về cách thức hưởng thụ và về phần của cải xã hội ít hay nhiều mà họ được hưởng. Giai cấp là những tập đoàn người, mà tập đoàn này có thể chiếm đoạt lao động của tập đoàn khác, do chỗ các tập đoàn đó có địa vị khác nhau trong một chế độ kinh tế - xã hội nhất định"
             </motion.blockquote>
 
             <motion.div
@@ -598,141 +685,66 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
           </AnimatedSection>
         </div>
       </section>
+    
 
-      {/* Gradient Transition to Key Concepts */}
-      <div className="h-32 relative">
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-b from-black/40 via-amber-900/15 to-amber-50"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        />
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-b from-red-950/20 via-orange-400/8 to-transparent"
-          animate={{
-            opacity: [0.4, 0.6, 0.4],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-      </div>
 
-      {/* Key Concepts - Grid */}
-      <section id="key-concepts" className="py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50">
-        <div className="max-w-7xl mx-auto">
-          <AnimatedSection className="mb-20">
+      {/* Final CTA */}
+      <section id="cta" className="py-10 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50\">
+        <div className="max-w-7xl mx-auto text-center">
+          <AnimatedSection>
             <motion.h2
-              className="text-6xl md:text-8xl font-black text-gray-900 mb-6"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              className="text-6xl md:text-9xl font-black mb-8"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1 }}
             >
-              Các Khái Niệm <span className="text-red-700">Chính</span>
+              <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent\">
+                Độc Lập Dân Tộc
+              </span>
+           
             </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="text-2xl text-gray-800 mb-16 max-w-3xl mx-auto text-center leading-relaxed"
+            >
+              “Độc lập dân tộc gắn liền với Chủ nghĩa xã hội” – Chủ tịch Hồ Chí Minh.
+              <br />
+              Đại đoàn kết dân tộc là đường lối chiến lược của cách mạng Việt Nam.
+            </motion.p>
+
+
             <motion.div
-              className="h-1 bg-gradient-to-r from-red-700 via-red-600 to-transparent\"
-              initial={{ width: 0 }}
-              whileInView={{ width: "75%" }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-            />
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                number: "01",
-                title: "Đấu Tranh Giai Cấp",
-                description: "Là cuộc đấu tranh của các tập đoàn người to lớn có lợi ích căn bản đối lập nhau. Thực chất là cuộc đấu tranh của quần chúng bị áp bức chống lại giai cấp thống trị.",
-                icon: Users
-              },
-              {
-                number: "02",
-                title: "Kết Cấu Xã Hội",
-                description: "Mỗi xã hội có giai cấp thường gồm hai giai cấp cơ bản (gắn với phương thức sản xuất thống trị) và các giai cấp không cơ bản hoặc tầng lớp trung gian.",
-                icon: TrendingUp
-              },
-              {
-                number: "03",
-                title: "Hình Thành Dân Tộc",
-                description: "Dân tộc là hình thức cộng đồng người phát triển cao nhất, gắn liền với lãnh thổ, kinh tế, ngôn ngữ chung và bản sắc văn hóa dân tộc.",
-                icon: BookOpen
-              }
-            ].map((concept, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                whileHover={{ y: -20, transition: { duration: 0.3 } }}
-                className="group relative bg-gradient-to-br from-orange-100 to-amber-50 p-10 border border-orange-200 hover:border-red-700 transition-all duration-500 cursor-pointer overflow-hidden shadow-sm hover:shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="flex flex-wrap gap-6 justify-center"
+            >
+              <motion.button
+                onClick={() => onViewChange?.('theory')}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-12 py-6 bg-red-700 text-white text-xl font-bold hover:bg-red-800 transition-colors cursor-pointer\ rounded-lg"
               >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-red-700/0 to-red-700/0 group-hover:from-red-700/5 group-hover:to-transparent\"
-                  transition={{ duration: 0.5 }}
-                />
+                Đọc Toàn Bộ Lý Thuyết
+              </motion.button>
+              <motion.button
+                onClick={() => onViewChange?.('theory')}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-12 py-6 bg-[#1F2937] text-white border-2 border-gray-700 text-xl font-bold hover:bg-[#111827] transition-colors duration-300 cursor-pointer rounded-lg "
+              >
+                Xem Tài Liệu Tham Khảo
+              </motion.button>
+            </motion.div>
 
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-8">
-                    <motion.span
-                      className="text-8xl font-black text-[#D6C7B5] group-hover:text-red-700/20 transition-colors duration-500\"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      {concept.number}
-                    </motion.span>
-                    <motion.div
-                      whileHover={{ rotate: 180, scale: 1.2 }}
-                      transition={{ duration: 0.6 }}
-                      className="p-4 bg-[#7A1F1F]/10   group-hover:bg-[#7A1F1F]/20 rounded-full\"
-                    >
-                      <concept.icon className="w-8 h-8 text-red-700\" />
-                    </motion.div>
-                  </div>
 
-                  <h3 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-red-700 transition-colors duration-300\">
-                    {concept.title}
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed mb-6\">
-                    {concept.description}
-                  </p>
-
-                  <motion.div
-                    className="flex items-center gap-2 text-red-700 font-semibold\"
-                    whileHover={{ x: 10 }}
-                  >
-                    <span>Learn more</span>
-                    <ArrowRight className="w-5 h-5" />
-                  </motion.div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          </AnimatedSection>
         </div>
       </section>
-
-      {/* Gradient Transition to Contemporary Relevance */}
-      <div className="h-32 relative">
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-b from-amber-50 via-amber-800/15 to-amber-900/40"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        />
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-b from-orange-300/5 via-amber-700/10 to-transparent"
-          animate={{
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-      </div>
-
+    
       {/* Contemporary Relevance */}
       <section id="contemporary" className="relative py-32 px-6 overflow-hidden">
         <ParallaxImage
@@ -812,24 +824,24 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1 }}
             >
-              <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent\">
-                Độc Lập
+              <span className=" bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent\">
+               Thực Tiễn Việt Nam
               </span>
               <br />
-              <span className="bg-gradient-to-r from-red-700 via-red-600 to-red-700 bg-clip-text text-transparent\">
-                Dân Tộc
-              </span>
+              {/* <span className="bg-gradient-to-r from-red-700 via-red-600 to-red-700 bg-clip-text text-transparent\">
+                Việt Nam
+              </span> */}
             </motion.h2>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-2xl text-gray-800 mb-16 max-w-3xl mx-auto text-center leading-relaxed"
+              className="text-2xl italic text-gray-800 mb-16 max-w-4xl mx-auto text-center leading-relaxed pt-10"
             >
-              “Độc lập dân tộc gắn liền với Chủ nghĩa xã hội” – Chủ tịch Hồ Chí Minh.
+              Vận dụng sáng tạo chủ nghĩa Mác - Lênin, Chủ tịch Hồ Chí Minh khẳng định:
               <br />
-              Đại đoàn kết dân tộc là đường lối chiến lược của cách mạng Việt Nam.
+             "Độc lập dân tộc gắn liền với Chủ nghĩa xã hội."
             </motion.p>
 
 
