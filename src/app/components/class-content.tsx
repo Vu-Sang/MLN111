@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'motion/react';
 import { ChevronRight, BookOpen, Users, TrendingUp, Zap } from 'lucide-react';
+import dauTranhGiaiCap from '../../assets/images/dautranhgiaicap.jpg';
+import vidu from '../../assets/images/image.png';
 
 
 interface SectionProps {
@@ -76,6 +78,7 @@ export function ClassContent({
             'dinh-nghia',
             'giai-cap-origin',
             'dau-tranh',
+            'vaitro',
             'cau-truc',
             'ket-luan',
         ];
@@ -98,9 +101,10 @@ export function ClassContent({
     }, []);
     const sections = [
         { id: 'introduction', title: 'Giới Thiệu', icon: '📚' },
-        { id: 'dinh-nghia', title: 'Định Nghĩa Giai Cấp', icon: '📝' },
-        { id: 'giai-cap-origin', title: 'Nguồn Gốc & Hình Thành', icon: '🌱' },
+        { id: 'dinh-nghia', title: 'Định Nghĩa', icon: '📝' },
+        { id: 'giai-cap-origin', title: 'Nguồn Gốc', icon: '🌱' },
         { id: 'dau-tranh', title: 'Đấu Tranh Giai Cấp', icon: '⚡' },
+        { id: 'vaitro', title: 'Vai Trò ', icon: '🎯' },
         { id: 'cau-truc', title: 'Cấu Trúc Giai Cấp', icon: '🏗️' },
         { id: 'ket-luan', title: 'Kết Luận', icon: '✓' },
     ];
@@ -132,7 +136,7 @@ export function ClassContent({
 
             <div className="flex relative">
                 {/* Left Sidebar - Table of Contents */}
-                <aside className="fixed left-0 top-24 h-115 w-56 overflow-y-auto hidden lg:block pt-8 pl-4 pr-4 bg-gradient-to-b from-amber-50/50 to-transparent border-r border-b border-orange-200 z-30">
+                <aside className="fixed left-0 top-24 h-125 w-56 overflow-y-auto hidden lg:block pt-8 pl-4 pr-4 bg-gradient-to-b from-amber-50/50 to-transparent border-r border-b border-orange-200 z-30">
                     <div className="space-y-2">
                         <h3 className="text-sm font-black text-gray-700 uppercase tracking-widest mb-6 px-2">
                             Mục Lục
@@ -210,7 +214,7 @@ export function ClassContent({
                                             <div className="bg-orange-100 p-6 border-l-4 border-red-700">
                                                 <div className="flex items-center gap-3 mb-3">
                                                     <Zap className="w-6 h-6 text-red-700" />
-                                                    <p className="font-bold text-gray-900">Địa Vị Sản Xuất</p>
+                                                    <p className="font-bold text-gray-900">Địa vị trong sản xuất xã hội</p>
                                                 </div>
                                                 <p className="text-gray-800">
                                                     Quan hệ với các tư liệu sản xuất (chủ nhân hay lao động thuê)
@@ -219,7 +223,7 @@ export function ClassContent({
                                             <div className="bg-orange-100 p-6 border-l-4 border-red-700">
                                                 <div className="flex items-center gap-3 mb-3">
                                                     <Users className="w-6 h-6 text-red-700" />
-                                                    <p className="font-bold text-gray-900">Vai Trò Xã Hội</p>
+                                                    <p className="font-bold text-gray-900">Vai trò trong tổ chức lao động xã hội</p>
                                                 </div>
                                                 <p className="text-gray-800">
                                                     Vị trí trong tổ chức lao động xã hội
@@ -237,10 +241,10 @@ export function ClassContent({
                                             <div className="bg-orange-100 p-6 border-l-4 border-red-700">
                                                 <div className="flex items-center gap-3 mb-3">
                                                     <BookOpen className="w-6 h-6 text-red-700" />
-                                                    <p className="font-bold text-gray-900">Tính Chất Pháp Luật</p>
+                                                    <p className="font-bold text-gray-900">Cách thức và quy mô hưởng thụ của cải</p>
                                                 </div>
                                                 <p className="text-gray-800">
-                                                    Được pháp luật quy định và thừa nhận
+                                                    Nguồn thu nhập và mức độ hưởng thụ của cải xã hội của từng giai cấp.
                                                 </p>
                                             </div>
                                         </div>
@@ -303,15 +307,22 @@ export function ClassContent({
                                             </p>
                                         </div>
                                     </div>
-
+                                    <div className="bg-orange-100 p-6 border-l-4 border-red-700 mb-6">
+                                        <img
+                                            src={dauTranhGiaiCap}
+                                            alt="Đấu tranh giai cấp"
+                                            className="w-full h-auto rounded-md object-cover"
+                                        />
+                                    </div>
                                     <div>
                                         <h4 className="text-2xl font-bold text-red-700 mb-4">Quy Luật Phát Triển Đấu Tranh Giai Cấp</h4>
                                         <div className="space-y-4">
                                             <div className="bg-orange-100 p-6 border-l-4 border-red-700">
                                                 <p className="font-bold text-gray-900 mb-2">Từ Tự Phát Đến Có Tổ Chức</p>
                                                 <p className="text-gray-800">
-                                                    Đấu tranh giai cấp phát triển từ các hành động tự phát của giai cấp bị áp bức, dần dần
-                                                    trở thành đấu tranh có tổ chức dưới sự lãnh đạo của Đảng Cộng Sản.
+                                                    Đấu tranh giai cấp phát triển từ các hành động tự phát của giai cấp bị áp bức,
+                                                    dần dần trở thành đấu tranh tự giác, có tổ chức dưới sự lãnh đạo của Đảng Cộng sản.
+
                                                 </p>
                                             </div>
                                             <div className="bg-orange-100 p-6 border-l-4 border-red-700">
@@ -323,7 +334,94 @@ export function ClassContent({
                                             <div className="bg-orange-100 p-6 border-l-4 border-red-700">
                                                 <p className="font-bold text-gray-900 mb-2">Cuộc Cách Mạng Vô Sản</p>
                                                 <p className="text-gray-800">
-                                                    Là giai đoạn cao nhất của đấu tranh giai cấp, mục tiêu cuối cùng là xóa bỏ hoàn toàn chế độ giai cấp.
+                                                    Là hình thức đấu tranh giai cấp cao nhất, nhằm lật đổ sự thống trị của giai cấp tư sản,
+                                                    thiết lập chính quyền của giai cấp công nhân và nhân dân lao động,
+                                                    từng bước tiến tới xã hội không còn giai cấp.
+                                                </p>
+                                            </div>
+                                            <div className="bg-orange-100 p-6 border-l-4 border-red-700 mb-6">
+                                                <img
+                                                    src={vidu}
+                                                    alt="Đấu tranh giai cấp"
+                                                    className="w-full h-auto rounded-md object-cover"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ContentSection>
+
+                        <ContentSection id="vaitro" className="mb-24">
+                            <div className="bg-zinc-900 p-8 border-l-4 border-red-600">
+                                <motion.h3 className="text-3xl font-bold mb-6 text-gray-100">
+                                    Vai trò của đấu tranh giai cấp
+                                </motion.h3>
+
+                                <div className="space-y-8">
+                                    {/* Tiêu đề phụ */}
+                                    <div>
+                                        <h4 className="text-2xl font-bold text-red-700 mb-4">
+                                            Những vai trò cơ bản của đấu tranh giai cấp
+                                        </h4>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            {/* Vai trò 1 */}
+                                            <div className="bg-orange-100 p-6 border-l-4 border-red-700">
+                                                <div className="flex items-center gap-3 mb-3">
+                                                    <TrendingUp className="w-6 h-6 text-red-700" />
+                                                    <p className="font-bold text-gray-900">
+                                                        Xác lập quan hệ sản xuất mới
+                                                    </p>
+                                                </div>
+                                                <p className="text-gray-800">
+                                                    Thông qua đấu tranh giai cấp, quan hệ sản xuất mới được xác lập
+                                                    phù hợp với trình độ phát triển của lực lượng sản xuất, từ đó
+                                                    thúc đẩy sự phát triển của xã hội.
+                                                </p>
+                                            </div>
+
+                                            {/* Vai trò 2 */}
+                                            <div className="bg-orange-100 p-6 border-l-4 border-red-700">
+                                                <div className="flex items-center gap-3 mb-3">
+                                                    <Zap className="w-6 h-6 text-red-700" />
+                                                    <p className="font-bold text-gray-900">
+                                                        Cải tạo xã hội, xóa bỏ lạc hậu
+                                                    </p>
+                                                </div>
+                                                <p className="text-gray-800">
+                                                    Đấu tranh giai cấp góp phần cải tạo xã hội, xóa bỏ những yếu tố
+                                                    lạc hậu, lỗi thời, tạo cơ sở cho các yếu tố mới, tiến bộ phát triển.
+                                                </p>
+                                            </div>
+
+                                            {/* Vai trò 3 */}
+                                            <div className="bg-orange-100 p-6 border-l-4 border-red-700">
+                                                <div className="flex items-center gap-3 mb-3">
+                                                    <Users className="w-6 h-6 text-red-700" />
+                                                    <p className="font-bold text-gray-900">
+                                                        Cải tạo giai cấp cách mạng
+                                                    </p>
+                                                </div>
+                                                <p className="text-gray-800">
+                                                    Thông qua đấu tranh giai cấp, giai cấp cách mạng được rèn luyện,
+                                                    nâng cao ý thức, tổ chức và năng lực lãnh đạo xã hội, đủ khả năng
+                                                    thực hiện vai trò lịch sử của mình.
+                                                </p>
+                                            </div>
+
+                                            {/* Vai trò 4 */}
+                                            <div className="bg-orange-100 p-6 border-l-4 border-red-700">
+                                                <div className="flex items-center gap-3 mb-3">
+                                                    <BookOpen className="w-6 h-6 text-red-700" />
+                                                    <p className="font-bold text-gray-900">
+                                                        Phát triển văn hóa – tư tưởng xã hội
+                                                    </p>
+                                                </div>
+                                                <p className="text-gray-800">
+                                                    Đấu tranh giai cấp tác động mạnh mẽ đến các lĩnh vực văn hóa,
+                                                    tư tưởng, đạo đức và nghệ thuật, làm cho chúng phát triển phù hợp
+                                                    với sự tiến bộ của xã hội.
                                                 </p>
                                             </div>
                                         </div>
@@ -344,10 +442,13 @@ export function ClassContent({
                                         <h4 className="text-2xl font-bold text-red-700 mb-4">Xã Hội Phong Kiến</h4>
                                         <div className="space-y-3 text-gray-800">
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Giai cấp cơ bản:</span> Tầng chủ phong kiến và giai cấp nông dân
+                                                • <span className="font-bold">Giai cấp cơ bản:</span> Địa chủ phong kiến và Nông dân tá điền. (Dùng "Địa chủ" sẽ chuẩn hơn "Tầng chủ").
                                             </p>
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Giai cấp không cơ bản:</span> Thương nhân, thợ thủ công, chính quyền
+                                                • <span className="font-bold">Giai cấp không cơ bản:</span> Thương nhân, thợ thủ công, thị dân.
+                                            </p>
+                                            <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
+                                                • <span className="font-bold">Đặc điểm:</span> Dựa trên sự chiếm hữu ruộng đất của địa chủ và sự lệ thuộc thân thể của nông dân.
                                             </p>
                                         </div>
                                     </div>
@@ -356,13 +457,13 @@ export function ClassContent({
                                         <h4 className="text-2xl font-bold text-red-700 mb-4">Xã Hội Tư Bản Chủ Nghĩa</h4>
                                         <div className="space-y-3 text-gray-800">
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Giai cấp cơ bản:</span> Tầng chủ tư bản và giai cấp công nhân vô sản
+                                                • <span className="font-bold">Giai cấp cơ bản:</span> Giai cấp Tư sản và Giai cấp Công nhân (Giai cấp vô sản).
                                             </p>
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Tầng lớp trung gian:</span> Tiểu tư sản, trí thức, nông dân bé
+                                                • <span className="font-bold">Tầng lớp trung gian:</span> Tiểu tư sản, tầng lớp trí thức, những người sản xuất nhỏ.
                                             </p>
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Đặc điểm:</span> Lực lượng sản xuất phát triển, nhất là công nghiệp
+                                                • <span className="font-bold">Đặc điểm:</span> Mâu thuẫn giữa tính chất xã hội hóa của lực lượng sản xuất với chế độ chiếm hữu tư nhân tư bản chủ nghĩa về tư liệu sản xuất.
                                             </p>
                                         </div>
                                     </div>
@@ -371,10 +472,13 @@ export function ClassContent({
                                         <h4 className="text-2xl font-bold text-red-700 mb-4">Xã Hội Chủ Nghĩa</h4>
                                         <div className="space-y-3 text-gray-800">
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Xóa bỏ giai cấp:</span> Quan hệ tư hữu được thay thế bằng tất cả nhân dân cùng sở hữu tư liệu sản xuất
+                                                • <span className="font-bold">Liên minh giai cấp:</span> Sự liên minh giữa Giai cấp Công nhân, Giai cấp Nông dân và Tầng lớp Trí thức.
                                             </p>
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Sự thống nhất:</span> Lao động phát triển, giữa lao động trí óc và lao động chân tay xóa mờ
+                                                • <span className="font-bold">Xóa bỏ giai cấp:</span> Từng bước xóa bỏ chế độ tư hữu, thiết lập chế độ Công hữu về tư liệu sản xuất chủ yếu.
+                                            </p>
+                                            <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
+                                                • <span className="font-bold">Sự thống nhất:</span> Các giai cấp, tầng lớp cùng hợp tác vì lợi ích chung. Khoảng cách giữa lao động trí óc và lao động chân tay dần được thu hẹp.
                                             </p>
                                         </div>
                                     </div>
@@ -388,9 +492,7 @@ export function ClassContent({
                                 Kết Luận
                             </motion.h3>
                             <p className="text-xl text-gray-800 leading-relaxed">
-                                Giai cấp là sản phẩm của phát triển không bằng của lực lượng sản xuất. Đấu tranh giai cấp là động lực
-                                thúc đẩy xã hội phát triển. Cuộc cách mạng vô sản dưới sự lãnh đạo của Đảng Cộng Sản là cách duy nhất
-                                để xóa bỏ hoàn toàn chế độ giai cấp và xây dựng xã hội không giai cấp - xã hội chủ nghĩa cộng sản.
+                                Sự hình thành và biến đổi của giai cấp gắn liền với sự phát triển của lực lượng sản xuất và quan hệ sản xuất. Đấu tranh giai cấp là động lực lịch sử thúc đẩy xã hội tiến lên. Trong tiến trình đó, cách mạng vô sản và vai trò lãnh đạo của Đảng Cộng sản có ý nghĩa quyết định đối với mục tiêu xây dựng xã hội công bằng, tiến bộ và không còn áp bức giai cấp.
                             </p>
                         </ContentSection>
                     </div>
