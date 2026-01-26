@@ -114,14 +114,14 @@ export function TheoryContent({ onViewChange }: { onViewChange?: (view: string) 
               className="group relative bg-gradient-to-br from-orange-100 to-amber-100 p-12 border-2 border-red-700 cursor-pointer overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500"
             >
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-red-700/0 to-red-700/0 group-hover:from-red-700/10 group-hover:to-transparent"
+                className="absolute inset-0 bg-gradient-to-br from-red-700/0 to-red-700/0 group-hover:from-red-700/3 group-hover:to-transparent"
                 transition={{ duration: 0.5 }}
               />
 
               <div className="relative z-10">
                 <motion.div
                   className="mb-6"
-                  whileHover={{ scale: 1.1, rotate: 360 }}
+                  whileHover={{ scale: 1.1, rotate: 0 }}
                   transition={{ duration: 0.6 }}
                 >
                   <div className="w-16 h-16 bg-red-700/20 rounded-full flex items-center justify-center">
@@ -157,14 +157,14 @@ export function TheoryContent({ onViewChange }: { onViewChange?: (view: string) 
               className="group relative bg-gradient-to-br from-orange-100 to-amber-100 p-12 border-2 border-red-700 cursor-pointer overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500"
             >
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-red-700/0 to-red-700/0 group-hover:from-red-700/10 group-hover:to-transparent"
+                className="absolute inset-0 bg-gradient-to-br from-red-700/0 to-red-700/0 group-hover:from-red-700/3 group-hover:to-transparent"
                 transition={{ duration: 0.5 }}
               />
 
               <div className="relative z-10">
                 <motion.div
                   className="mb-6"
-                  whileHover={{ scale: 1.1, rotate: 360 }}
+                  whileHover={{ scale: 1.1, rotate: 0 }}
                   transition={{ duration: 0.6 }}
                 >
                   <div className="w-16 h-16 bg-red-700/20 rounded-full flex items-center justify-center">

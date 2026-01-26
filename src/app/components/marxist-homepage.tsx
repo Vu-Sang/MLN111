@@ -4,6 +4,44 @@ import { ArrowRight, BookOpen, Users, TrendingUp, ChevronDown } from 'lucide-rea
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import banner from "../../assets/images/banner3.jpg";
 
+/// Navigation handler for internal routes
+type ViewType = 'home' | 'theory' | 'class' | 'ethnicity';
+
+const navigateToSection = (
+  target?: string,
+  onViewChange?: (view: ViewType) => void
+) => {
+  if (!target || !onViewChange) return;
+
+  const [path, sectionId] = target.split('#');
+
+  const viewMap: Record<
+    '/class-content' | '/ethnicity-content' | '/theory-content',
+    ViewType
+  > = {
+    '/class-content': 'class',
+    '/ethnicity-content': 'ethnicity',
+    '/theory-content': 'theory',
+  };
+
+  const view = viewMap[path as keyof typeof viewMap];
+  if (!view) return;
+
+  // đổi view
+  onViewChange(view);
+
+  // scroll tới section (nếu có) - delay to allow DOM to render
+  if (sectionId) {
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 150);
+  }
+};
+
+
 function AnimatedSection({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-150px" });
@@ -166,14 +204,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               Trang chủ
             </motion.button>
 
-            <motion.button
-              onClick={() => scrollToSection('dinh-nghia')}
-              className={`font-medium transition-colors duration-300 hover:text-red-700 ${navColor}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Định nghĩa
-            </motion.button>
+
             <motion.button
               onClick={() => scrollToSection('key-concepts')}
               className={`font-medium transition-colors duration-300 hover:text-red-700 ${navColor}`}
@@ -181,6 +212,22 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               whileTap={{ scale: 0.95 }}
             >
               Khái niệm
+            </motion.button>
+            <motion.button
+              onClick={() => scrollToSection('dinh-nghia')}
+              className={`font-medium transition-colors duration-300 hover:text-red-700 ${navColor}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Giai cấp
+            </motion.button>
+            <motion.button
+              onClick={() => scrollToSection('nation')}
+              className={`font-medium transition-colors duration-300 hover:text-red-700 ${navColor}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Dân tộc
             </motion.button>
             <motion.button
               onClick={() => scrollToSection('contemporary')}
@@ -322,9 +369,6 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
 
               </h1>
             </div>
-
-
-
             {/* Description */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -348,13 +392,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
             >
               <motion.button
                 onClick={() => onViewChange?.('theory')}
-                className="
-         group relative px-10 py-5
-    bg-[#8C1916]
-    border 
-    rounded-lg
-    overflow-hidden cursor-pointer
-  "
+                className="group relative px-10 py-5 bg-[#8C1916] border rounded-lg overflow-hidden cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -370,31 +408,22 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
                 </span>
               </motion.button>
-
-
-
-
               <motion.button
-                onClick={() => onViewChange?.('theory')}
-                className="
-    px-10 py-5
-    bg-[#FAEFDD]
-    border-2 border-[#FAEFDD]
-    rounded-lg
-    backdrop-blur-sm
-    transition-all duration-300
-    cursor-pointer
-  "
+                onClick={() => {
+                  scrollToSection('key-concepts');
+                }}
+                className="px-10 py-5 bg-[#FAEFDD] border-2 border-[#FAEFDD] rounded-lg backdrop-blur-sm transition-all duration-300 cursor-pointer"
                 whileHover={{
                   scale: 1.05,
                   backgroundColor: "#F3E6C8"
                 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="text-lg font-semibold text-[#2A1E1A] ">
-                  Đọc Toàn Bộ Nội Dung
+                <span className="text-lg font-semibold text-[#2A1E1A]">
+                  Xem Nội Dung Chính
                 </span>
               </motion.button>
+
 
             </motion.div>
           </div>
@@ -472,7 +501,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                 title: "Dân tộc ",
                 description: "Dân tộc là hình thức cộng đồng người cao nhất, được hình thành trên cơ sở lãnh thổ, kinh tế, ngôn ngữ và văn hóa, trong đó kinh tế giữ vai trò quyết định.",
                 icon: TrendingUp,
-                targetId: 'cta'
+                targetId: 'nation'
               },
               {
                 number: "03",
@@ -529,6 +558,26 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
           </div>
         </div>
       </section>
+      {/* Gradient Transition Layer */}
+      <div className="h-32 relative">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-b from-black/30 via-amber-900/20 to-transparent"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        />
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-b from-red-950/20 via-orange-400/10 to-transparent"
+          animate={{
+            opacity: [0.4, 0.6, 0.4],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </div>
       {/* Introduction Section */}
       <section id='dinh-nghia' className="min-h-screen relative py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50">
         <div className="max-w-7xl mx-auto">
@@ -581,19 +630,22 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
             </div>
 
             {/* Right Content - Cards */}
+
             <div className="space-y-6">
               {[
                 {
                   icon: BookOpen,
-                  title: "Nguồn Gốc Sâu Xa",
-                  description: "Sự phát triển của lực lượng sản xuất làm cho năng suất lao động tăng lên, xuất hiện 'của dư', tạo khả năng khách quan để tập đoàn người này chiếm đoạt lao động của tập đoàn người khác.",
-                  delay: 0.2
+                  title: "Nguồn Gốc Giai Cấp",
+                  description: "Giai cấp xuất hiện từ sự phát triển của lực lượng sản xuất và sự ra đời của chế độ tư hữu về tư liệu sản xuất.",
+                  delay: 0.2,
+                  target: "/class-content#giai-cap-origin"
                 },
                 {
                   icon: Users,
-                  title: "Nguồn Gốc Trực Tiếp",
-                  description: "Sự xuất hiện chế độ tư hữu về tư liệu sản xuất. Chế độ tư hữu là cơ sở trực tiếp của sự hình thành giai cấp.",
-                  delay: 0.4
+                  title: "Kết Cấu Xã Hội - Giai Cấp",
+                  description: "Trong xã hội có giai cấp, kết cấu xã hội bao gồm các giai cấp cơ bản và những tầng lớp xã hội trung gian.",
+                  delay: 0.4,
+                  target: "/class-content#cau-truc"
                 }
               ].map((card, index) => (
                 <motion.div
@@ -602,8 +654,14 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: card.delay }}
                   whileHover={{ x: -10 }}
-                  className="group relative bg-gradient-to-br from-orange-100 to-amber-100 p-8 border-l-4 border-red-700 cursor-pointer overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                  onClick={() => navigateToSection(card.target, onViewChange)}
+                  role="button"
+                  tabIndex={0}
+                  className="group relative bg-gradient-to-br from-orange-100 to-amber-100 
+             p-8 border-l-4 border-red-700 cursor-pointer 
+             overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                 >
+
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-red-700/5 to-transparent"
                     initial={{ x: "-100%" }}
@@ -685,11 +743,11 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
           </AnimatedSection>
         </div>
       </section>
-    
 
 
-      {/* Final CTA */}
-      <section id="cta" className="py-10 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50\">
+
+      {/* Dân Tộc*/}
+      <section id="nation" className="py-10 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50\">
         <div className="max-w-7xl mx-auto text-center">
           <AnimatedSection>
             <motion.h2
@@ -698,10 +756,21 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1 }}
             >
-              <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent\">
-                Độc Lập Dân Tộc
-              </span>
-           
+              <div className="inline-block text-left">
+
+                <motion.h2
+                  className="text-6xl md:text-8xl font-black text-gray-900 mb-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  Độc Lập <span className="text-red-700">Dân Tộc</span>
+                </motion.h2>
+
+
+              </div>
+
+
             </motion.h2>
 
             <motion.p
@@ -744,7 +813,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
           </AnimatedSection>
         </div>
       </section>
-    
+
       {/* Contemporary Relevance */}
       <section id="contemporary" className="relative py-32 px-6 overflow-hidden">
         <ParallaxImage
@@ -825,7 +894,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               transition={{ duration: 1 }}
             >
               <span className=" bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent\">
-               Thực Tiễn Việt Nam
+                Thực Tiễn Việt Nam
               </span>
               <br />
               {/* <span className="bg-gradient-to-r from-red-700 via-red-600 to-red-700 bg-clip-text text-transparent\">
@@ -841,7 +910,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
             >
               Vận dụng sáng tạo chủ nghĩa Mác - Lênin, Chủ tịch Hồ Chí Minh khẳng định:
               <br />
-             "Độc lập dân tộc gắn liền với Chủ nghĩa xã hội."
+              "Độc lập dân tộc gắn liền với Chủ nghĩa xã hội."
             </motion.p>
 
 

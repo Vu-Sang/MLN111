@@ -1,18 +1,20 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'motion/react';
 import { ChevronRight, Globe, Flag, Users, Zap } from 'lucide-react';
 
 interface SectionProps {
   children: React.ReactNode;
   className?: string;
+  id?: string;
 }
 
-function ContentSection({ children, className = '' }: SectionProps) {
-  const ref = useRef(null);
+function ContentSection({ children, className = '', id }: SectionProps) {
+  const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <motion.div
+      id={id}
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
@@ -25,6 +27,77 @@ function ContentSection({ children, className = '' }: SectionProps) {
 }
 
 export function EthnicityContent({ onViewChange }: { onViewChange?: (view: string) => void }) {
+  const [activeSection, setActiveSection] = useState('introduction');
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    setActiveSection(id);
+
+    const targetPosition = element.getBoundingClientRect().top + window.scrollY - 120;
+    const startPosition = window.scrollY;
+    const distance = targetPosition - startPosition;
+    const duration = 1000;
+    let start: number | null = null;
+
+    const easeInOutCubic = (t: number): number => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    const scroll = (timestamp: number) => {
+      if (start === null) start = timestamp;
+      const elapsed = timestamp - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+
+      window.scrollTo(0, startPosition + distance * ease);
+
+      if (progress < 1) {
+        requestAnimationFrame(scroll);
+      }
+    };
+
+    requestAnimationFrame(scroll);
+  };
+
+  useEffect(() => {
+    const sectionIds = [
+      'introduction',
+      'hinh-thuc-cong-dong',
+      'dan-toc-khoa-niem',
+      'qua-trinh-hinh-thanh',
+      'moi-quan-he',
+      'y-nghia-thuc-tien',
+      'ket-luan',
+    ];
+
+    const handleScroll = () => {
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= 160 && rect.bottom >= 160) {
+          setActiveSection(id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const sections = [
+    { id: 'introduction', title: 'Giới Thiệu', icon: '📚' },
+    { id: 'hinh-thuc-cong-dong', title: 'Hình Thức Cộng Đồng', icon: '👥' },
+    { id: 'dan-toc-khoa-niem', title: 'Dân Tộc - Khái Niệm', icon: '🌍' },
+    { id: 'qua-trinh-hinh-thanh', title: 'Quá Trình Hình Thành', icon: '📜' },
+    { id: 'moi-quan-he', title: 'Giai Cấp & Dân Tộc', icon: '⚡' },
+    { id: 'y-nghia-thuc-tien', title: 'Ý Nghĩa Thực Tiễn', icon: '🎯' },
+    { id: 'ket-luan', title: 'Kết Luận', icon: '✓' },
+  ];
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 text-gray-900">
       {/* Header */}
@@ -49,10 +122,51 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 py-24">
+      <div className="flex relative">
+        {/* Left Sidebar - Table of Contents */}
+        <aside className="fixed left-0 top-24 h-screen w-56 overflow-y-auto hidden lg:block pt-8 pl-4 pr-4 bg-gradient-to-b from-amber-50/50 to-transparent border-r border-orange-200 z-30">
+          <div className="space-y-2">
+            <h3 className="text-sm font-black text-gray-700 uppercase tracking-widest mb-6 px-2">
+              Mục Lục
+            </h3>
+            {sections.map((section, index) => (
+              <motion.button
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
+                type="button"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.05 }}
+                whileHover={{ x: 8, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center gap-3 cursor-pointer ${activeSection === section.id
+                  ? 'bg-red-700 text-white shadow-lg font-bold'
+                  : 'text-gray-700 hover:bg-orange-100 font-medium'
+                  }`}
+              >
+                <span className="text-lg flex-shrink-0">{section.icon}</span>
+                <span className="text-sm line-clamp-1">
+                  {section.title}
+                </span>
+                {activeSection === section.id && (
+                  <motion.div
+                    initial={{ scale: 0, rotate: -90 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  >
+                    <ChevronRight className="w-4 h-4 ml-auto flex-shrink-0" />
+                  </motion.div>
+                )}
+              </motion.button>
+            ))}
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 lg:ml-56 px-6 py-24">
+        <div className="max-w-4xl mx-auto">
         {/* Introduction */}
-        <ContentSection className="mb-24">
+        <ContentSection id="introduction" className="mb-24">
           <motion.div
             initial={{ width: 0 }}
             whileInView={{ width: "20rem" }}
@@ -70,7 +184,7 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
         </ContentSection>
 
         {/* Historical Forms */}
-        <ContentSection className="mb-24">
+        <ContentSection id="hinh-thuc-cong-dong" className="mb-24">
           <div className="bg-zinc-900 p-8 border-l-4 border-red-600">
             <motion.h3 className="text-3xl font-bold mb-6 text-gray-100">
               Các Hình Thức Cộng Đồng Người Trước Khi Hình Thành Dân Tộc
@@ -125,7 +239,7 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
         </ContentSection>
 
         {/* Ethnicity/Nation Concept */}
-        <ContentSection className="mb-24">
+        <ContentSection id="dan-toc-khoa-niem" className="mb-24">
           <div className="bg-zinc-900 p-8 border-l-4 border-red-600">
             <motion.h3 className="text-3xl font-bold mb-6 text-gray-100">
               Dân Tộc - Hình Thức Cộng Đồng Người Phổ Biến Hiện Nay
@@ -196,7 +310,7 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
         </ContentSection>
 
         {/* Formation Process */}
-        <ContentSection className="mb-24">
+        <ContentSection id="qua-trinh-hinh-thanh" className="mb-24">
           <div className="bg-zinc-900 p-8 border-l-4 border-red-600">
             <motion.h3 className="text-3xl font-bold mb-6 text-gray-100">
               Quá Trình Hình Thành Dân Tộc
@@ -256,7 +370,7 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
         </ContentSection>
 
         {/* Class-Ethnicity Relationship */}
-        <ContentSection className="mb-24">
+        <ContentSection id="moi-quan-he" className="mb-24">
           <div className="bg-zinc-900 p-8 border-l-4 border-red-600">
             <motion.h3 className="text-3xl font-bold mb-6 text-gray-100">
               Mối Quan Hệ Giữa Giai Cấp và Dân Tộc
@@ -298,7 +412,7 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
         </ContentSection>
 
         {/* Contemporary Relevance */}
-        <ContentSection className="mb-24">
+        <ContentSection id="y-nghia-thuc-tien" className="mb-24">
           <div className="bg-zinc-900 p-8 border-l-4 border-red-600">
             <motion.h3 className="text-3xl font-bold mb-6 text-gray-100">
               Ý Nghĩa Thực Tiễn Ở Việt Nam
@@ -334,7 +448,7 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
         </ContentSection>
 
         {/* Conclusion */}
-        <ContentSection className="mb-24 py-16 bg-gradient-to-r from-red-600/20 via-transparent to-red-600/20 px-8 rounded-lg border border-red-600/30">
+        <ContentSection id="ket-luan" className="mb-24 py-16 bg-gradient-to-r from-red-600/20 via-transparent to-red-600/20 px-8 rounded-lg border border-red-600/30">
           <motion.h3 className="text-4xl font-bold mb-8 text-red-700 text-center">
             Kết Luận
           </motion.h3>
@@ -346,7 +460,9 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
             tự hào dân tộc mạnh mẽ.
           </p>
         </ContentSection>
-      </main>
+        </div>
+        </main>
+      </div>
 
       {/* Footer */}
       <footer className="border-t border-zinc-800 bg-black py-12 px-6">

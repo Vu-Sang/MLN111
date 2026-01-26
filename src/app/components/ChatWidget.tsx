@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Settings, Send, Trash2 } from 'lucide-react';
+import { MessageCircle, X, Settings, Send, Trash2, Bot } from 'lucide-react';
 import { chatWithAI } from '../services/chatClient.js';
 import {
     getGeminiApiKey,
@@ -166,7 +166,7 @@ export const ChatWidget = () => {
                         e.currentTarget.style.transform = 'scale(1)';
                     }}
                 >
-                    <MessageCircle size={24} />
+                <Bot size={30} />
                 </button>
             )}
 
