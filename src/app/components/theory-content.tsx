@@ -8,11 +8,7 @@ interface SectionProps {
   id?: string;
 }
 const NAV_ITEMS = [
-  { id: "home", label: "Trang chủ" },
-  { id: "dinh-nghia", label: "Định nghĩa" },
-  { id: "key-concepts", label: "Khái niệm" },
-  { id: "contemporary", label: "Mối quan hệ" },
-  { id: "cta", label: "Khám phá" },
+  { id: "overview", label: "Tổng quan" },
   { id: "quiz", label: "Kiểm tra" },
 ];
 
@@ -320,15 +316,14 @@ function QuizComponent() {
                 return (
                   <motion.div
                     key={idx}
-                    className={`rounded-lg border-2 transition-all ${
-                      showAsCorrect
+                    className={`rounded-lg border-2 transition-all ${showAsCorrect
                         ? 'border-green-600 bg-green-100'
                         : showAsIncorrect
-                        ? 'border-red-600 bg-red-100'
-                        : isSelected
-                        ? 'border-yellow-600 bg-yellow-100'
-                        : 'border-orange-300 bg-white'
-                    }`}
+                          ? 'border-red-600 bg-red-100'
+                          : isSelected
+                            ? 'border-yellow-600 bg-yellow-100'
+                            : 'border-orange-300 bg-white'
+                      }`}
                   >
                     <button
                       onClick={() => !isAnswered && handleSelectAnswer(option)}
@@ -337,15 +332,14 @@ function QuizComponent() {
                     >
                       <div className="flex items-start gap-3">
                         <div
-                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                            showAsCorrect
+                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${showAsCorrect
                               ? 'border-green-600 bg-green-600'
                               : showAsIncorrect
-                              ? 'border-red-600 bg-red-600'
-                              : isSelected
-                              ? 'border-yellow-600 bg-yellow-600'
-                              : 'border-orange-400'
-                          }`}
+                                ? 'border-red-600 bg-red-600'
+                                : isSelected
+                                  ? 'border-yellow-600 bg-yellow-600'
+                                  : 'border-orange-400'
+                            }`}
                         >
                           {showAsCorrect && <CheckCircle className="w-5 h-5 text-white" />}
                           {showAsIncorrect && <XCircle className="w-5 h-5 text-white" />}
@@ -440,8 +434,8 @@ function QuizComponent() {
               {score >= quizQuestions.length * 0.8
                 ? '🎉 Xuất sắc!'
                 : score >= quizQuestions.length * 0.6
-                ? '👍 Tốt!'
-                : '📚 Cần ôn lại'}
+                  ? '👍 Tốt!'
+                  : '📚 Cần ôn lại'}
             </h3>
             <p className="text-gray-700">
               Bạn đã trả lời đúng {score} trên {quizQuestions.length} câu hỏi
@@ -455,9 +449,8 @@ function QuizComponent() {
               return (
                 <div
                   key={q.id}
-                  className={`p-4 rounded-lg border-l-4 ${
-                    isUserCorrect ? 'bg-green-100 border-green-600' : 'bg-red-100 border-red-600'
-                  }`}
+                  className={`p-4 rounded-lg border-l-4 ${isUserCorrect ? 'bg-green-100 border-green-600' : 'bg-red-100 border-red-600'
+                    }`}
                 >
                   <div className="flex gap-3 mb-2">
                     {isUserCorrect ? (
@@ -497,13 +490,14 @@ function QuizComponent() {
   );
 }
 
-function ContentSection({ children, className = '' }: SectionProps) {
+function ContentSection({ children, className = '', id }: SectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <motion.div
       ref={ref}
+      id={id}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -516,7 +510,7 @@ function ContentSection({ children, className = '' }: SectionProps) {
 
 export function TheoryContent({ onViewChange }: { onViewChange?: (view: string) => void }) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 text-gray-900">
+    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 text-gray-900 scroll-smooth">
       {/* Navigation Bar */}
       <motion.nav
         className="sticky top-0 z-50 px-6 py-4 bg-gradient-to-r from-amber-50/95 via-amber-50/95 to-orange-50/95 backdrop-blur-sm border-b border-orange-200"
@@ -530,7 +524,12 @@ export function TheoryContent({ onViewChange }: { onViewChange?: (view: string) 
             className="flex items-center gap-2 cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => onViewChange?.("home")}
+            onClick={() => {
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              });
+            }}
           >
             <div className="w-8 h-8 bg-gradient-to-br from-red-700 to-red-900 rounded-lg flex items-center justify-center">
               <span className="text-amber-50 font-bold text-lg">M</span>
@@ -542,7 +541,11 @@ export function TheoryContent({ onViewChange }: { onViewChange?: (view: string) 
           <div className="hidden md:flex items-center gap-8">
             {NAV_ITEMS.map((item) => (
               <motion.button
-                onClick={() => onViewChange?.("home")}
+                key={item.id}
+                onClick={() => {
+                  const element = document.getElementById(item.id);
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                }}
                 className="font-medium text-gray-800 hover:text-red-700 transition-colors"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
@@ -554,7 +557,10 @@ export function TheoryContent({ onViewChange }: { onViewChange?: (view: string) 
 
           {/* Back Button */}
           <motion.button
-            onClick={() => onViewChange?.("home")}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setTimeout(() => onViewChange?.("home"), 300);
+            }}
             className="px-6 py-2 bg-gradient-to-r from-red-700 to-red-900 text-amber-50 rounded-lg font-medium flex items-center gap-2 hover:shadow-lg transition-shadow cursor-pointer"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
@@ -567,7 +573,7 @@ export function TheoryContent({ onViewChange }: { onViewChange?: (view: string) 
 
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-6 py-24">
+      <main id="main" className="max-w-6xl mx-auto px-6 py-24">
         {/* Introduction */}
         <ContentSection className="mb-24">
           <motion.div
@@ -676,7 +682,7 @@ export function TheoryContent({ onViewChange }: { onViewChange?: (view: string) 
         </ContentSection>
 
         {/* Overview Section */}
-        <ContentSection className="mb-24 py-16 bg-gradient-to-r from-red-600/20 via-transparent to-red-600/20 px-8 rounded-lg border border-red-600/30">
+        <ContentSection id="overview" className="mb-24 py-16 bg-gradient-to-r from-red-600/20 via-transparent to-red-600/20 px-8 rounded-lg border border-red-600/30">
           <motion.h3 className="text-4xl font-bold mb-8 text-red-700">
             Tổng Quan
           </motion.h3>

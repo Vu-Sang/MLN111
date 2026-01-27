@@ -16,7 +16,7 @@ interface SectionProps {
   id?: string;
 }
 
-const quizQuestions: Question[] = [
+const allQuestions: Question[] = [
   {
     id: 1,
     question: "Hình thức cộng đồng người nào được coi là phát triển cao nhất và phổ biến nhất trong lịch sử xã hội loài người hiện nay?",
@@ -124,17 +124,29 @@ const quizQuestions: Question[] = [
   }
 ];
 
+// Function to get 5 random questions from all questions
+const getRandomQuestions = (count: number): Question[] => {
+  const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+};
+
 function QuizComponent() {
+  const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string }>({});
   const [showFinalResults, setShowFinalResults] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
 
-  const question = quizQuestions[currentQuestion];
+  // Initialize with 5 random questions on mount
+  useEffect(() => {
+    setQuizQuestions(getRandomQuestions(5));
+  }, []);
+
+  const question = quizQuestions.length > 0 ? quizQuestions[currentQuestion] : null;
   const currentAnswer = selectedAnswers[currentQuestion];
   const isAnswered = currentAnswer !== undefined;
-  const isCorrect = currentAnswer === question.correctAnswer;
+  const isCorrect = question && currentAnswer === question.correctAnswer;
   const score = Object.entries(selectedAnswers).filter(
     ([questionId, answer]) => quizQuestions[parseInt(questionId)].correctAnswer === answer
   ).length;
@@ -168,6 +180,7 @@ function QuizComponent() {
     setSelectedAnswers({});
     setCurrentQuestion(0);
     setShowFinalResults(false);
+    setQuizQuestions(getRandomQuestions(5));
   };
 
   return (
@@ -176,25 +189,27 @@ function QuizComponent() {
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-zinc-900 p-8 border border-red-600/30 rounded-lg"
+      className="bg-gradient-to-br from-orange-100 to-amber-100 p-8 border-2 border-red-700 rounded-lg"
     >
-      {!showFinalResults ? (
+      {quizQuestions.length === 0 ? (
+        <div className="text-center text-gray-700">Đang tải câu hỏi...</div>
+      ) : !showFinalResults && question ? (
         <>
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-2xl font-bold text-red-700">Câu {currentQuestion + 1}</h3>
-              <div className="text-sm text-gray-400">{currentQuestion + 1}/{quizQuestions.length}</div>
+              <div className="text-sm text-gray-700">{currentQuestion + 1}/{quizQuestions.length}</div>
             </div>
-            <div className="w-full bg-gray-700 rounded-full h-2">
+            <div className="w-full bg-gray-400 rounded-full h-2">
               <div
-                className="bg-red-600 h-2 rounded-full transition-all duration-300"
+                className="bg-red-700 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${((currentQuestion + 1) / quizQuestions.length) * 100}%` }}
               />
             </div>
           </div>
 
           <div className="mb-8">
-            <h4 className="text-xl font-semibold text-gray-100 mb-6">{question.question}</h4>
+            <h4 className="text-lg font-semibold text-gray-900 mb-6">{question.question}</h4>
 
             <div className="space-y-3">
               {question.options.map((option, idx) => {
@@ -206,15 +221,14 @@ function QuizComponent() {
                 return (
                   <motion.div
                     key={idx}
-                    className={`rounded-lg border-2 transition-all ${
-                      showAsCorrect
-                        ? 'border-green-600 bg-green-600/20'
-                        : showAsIncorrect
-                        ? 'border-red-600 bg-red-600/20'
+                    className={`rounded-lg border-2 transition-all ${showAsCorrect
+                      ? 'border-green-600 bg-green-100'
+                      : showAsIncorrect
+                        ? 'border-red-600 bg-red-100'
                         : isSelected
-                        ? 'border-yellow-600 bg-yellow-600/10'
-                        : 'border-gray-600 bg-gray-900/50'
-                    }`}
+                          ? 'border-yellow-600 bg-yellow-100'
+                          : 'border-orange-300 bg-white'
+                      }`}
                   >
                     <button
                       onClick={() => !isAnswered && handleSelectAnswer(option)}
@@ -223,34 +237,33 @@ function QuizComponent() {
                     >
                       <div className="flex items-start gap-3">
                         <div
-                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                            showAsCorrect
-                              ? 'border-green-600 bg-green-600'
-                              : showAsIncorrect
+                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${showAsCorrect
+                            ? 'border-green-600 bg-green-600'
+                            : showAsIncorrect
                               ? 'border-red-600 bg-red-600'
                               : isSelected
-                              ? 'border-yellow-600 bg-yellow-600'
-                              : 'border-gray-500'
-                          }`}
+                                ? 'border-yellow-600 bg-yellow-600'
+                                : 'border-orange-400'
+                            }`}
                         >
                           {showAsCorrect && <CheckCircle className="w-5 h-5 text-white" />}
                           {showAsIncorrect && <XCircle className="w-5 h-5 text-white" />}
                           {isSelected && !isAnswered && (
-                            <div className="w-2 h-2 bg-white rounded-full" />
+                            <div className="w-2 h-2 bg-yellow-700 rounded-full" />
                           )}
                         </div>
                         <div className="flex-1">
-                          <span className="text-gray-100">{option}</span>
+                          <span className="text-gray-900">{option}</span>
                           {showAsCorrect && (
                             <motion.div
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: 'auto' }}
-                              className="mt-3 p-3 bg-green-900/50 rounded border-l-2 border-green-600"
+                              className="mt-3 p-3 bg-green-200 rounded border-l-2 border-green-600"
                             >
-                              <p className="text-green-300 text-sm">
+                              <p className="text-green-800 text-sm">
                                 <span className="font-semibold">✓ Chính xác!</span>
                               </p>
-                              <p className="text-green-200 text-sm mt-2 italic">
+                              <p className="text-green-700 text-sm mt-2 italic">
                                 {question.explanation}
                               </p>
                             </motion.div>
@@ -259,13 +272,13 @@ function QuizComponent() {
                             <motion.div
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: 'auto' }}
-                              className="mt-3 p-3 bg-red-900/50 rounded border-l-2 border-red-600"
+                              className="mt-3 p-3 bg-red-200 rounded border-l-2 border-red-600"
                             >
-                              <p className="text-red-300 text-sm font-semibold">✗ Sai rồi!</p>
-                              <p className="text-red-200 text-sm mt-2">
+                              <p className="text-red-800 text-sm font-semibold">✗ Sai rồi!</p>
+                              <p className="text-red-700 text-sm mt-2">
                                 Đáp án đúng là: <span className="font-semibold">{question.correctAnswer}</span>
                               </p>
-                              <p className="text-red-200 text-sm mt-2 italic">
+                              <p className="text-red-700 text-sm mt-2 italic">
                                 {question.explanation}
                               </p>
                             </motion.div>
@@ -283,7 +296,7 @@ function QuizComponent() {
             <button
               onClick={handlePrev}
               disabled={currentQuestion === 0}
-              className="px-6 py-2 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed text-gray-100 rounded-lg transition-colors"
+              className="px-6 py-2 bg-orange-200 hover:bg-orange-300 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 rounded-lg transition-colors font-semibold"
             >
               ← Quay lại
             </button>
@@ -292,7 +305,7 @@ function QuizComponent() {
               <button
                 onClick={handleSubmit}
                 disabled={Object.keys(selectedAnswers).length !== quizQuestions.length}
-                className="px-8 py-2 bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors"
+                className="px-8 py-2 bg-red-700 hover:bg-red-800 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors"
               >
                 Nộp bài
               </button>
@@ -300,7 +313,7 @@ function QuizComponent() {
               <button
                 onClick={handleNext}
                 disabled={!isAnswered}
-                className="px-6 py-2 bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors flex items-center gap-2"
+                className="px-6 py-2 bg-red-700 hover:bg-red-800 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors flex items-center gap-2 font-semibold"
               >
                 Tiếp theo →
               </button>
@@ -315,53 +328,52 @@ function QuizComponent() {
               animate={{ scale: 1 }}
               className="inline-block mb-6"
             >
-              <div className="text-6xl font-bold text-red-600 mb-2">
+              <div className="text-6xl font-bold text-red-700 mb-2">
                 {score}/{quizQuestions.length}
               </div>
-              <div className="text-xl text-gray-300">
+              <div className="text-xl text-gray-700">
                 {Math.round((score / quizQuestions.length) * 100)}%
               </div>
             </motion.div>
-            <h3 className="text-3xl font-bold text-gray-100 mb-4">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">
               {score >= quizQuestions.length * 0.8
                 ? '🎉 Xuất sắc!'
                 : score >= quizQuestions.length * 0.6
-                ? '👍 Tốt!'
-                : '📚 Cần ôn lại'}
+                  ? '👍 Tốt!'
+                  : '📚 Cần ôn lại'}
             </h3>
-            <p className="text-gray-400">
+            <p className="text-gray-700">
               Bạn đã trả lời đúng {score} trên {quizQuestions.length} câu hỏi
             </p>
           </div>
 
           <div className="space-y-4 mb-8 max-h-96 overflow-y-auto">
             {quizQuestions.map((q, idx) => {
-              const userAnswer = selectedAnswers[q.id - 1];
+              const userAnswer = selectedAnswers[idx];
               const isUserCorrect = userAnswer === q.correctAnswer;
               return (
                 <div
                   key={q.id}
-                  className={`p-4 rounded-lg border-l-4 ${
-                    isUserCorrect ? 'bg-green-900/20 border-green-600' : 'bg-red-900/20 border-red-600'
-                  }`}
+                  className={`p-4 rounded-lg border-l-4 ${isUserCorrect ? 'bg-green-100 border-green-600' : 'bg-red-100 border-red-600'
+                    }`}
                 >
                   <div className="flex gap-3 mb-2">
                     {isUserCorrect ? (
-                      <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                     ) : (
-                      <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                      <XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
                     )}
                     <div className="flex-1">
-                      <p className="font-semibold text-gray-100">Câu {q.id}: {q.question}</p>
-                      <p className="text-sm text-gray-400 mt-2">
+                      <p className="font-semibold text-gray-900">Câu {idx + 1}: {q.question}</p>
+                      <p className="text-sm text-gray-700 mt-2">
                         <span className="font-semibold">Câu trả lời của bạn:</span> {userAnswer || 'Không trả lời'}
                       </p>
                       {!isUserCorrect && (
-                        <p className="text-sm text-gray-400">
+                        <p className="text-sm text-gray-700">
                           <span className="font-semibold">Đáp án đúng:</span> {q.correctAnswer}
                         </p>
                       )}
-                      <p className="text-sm text-gray-300 mt-2 italic">
+                      <p className="text-sm text-gray-800 mt-2 italic">
                         <span className="font-semibold">Giải thích:</span> {q.explanation}
                       </p>
                     </div>
@@ -373,7 +385,7 @@ function QuizComponent() {
 
           <button
             onClick={handleReset}
-            className="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors"
+            className="w-full px-6 py-3 bg-red-700 hover:bg-red-800 text-white rounded-lg font-semibold transition-colors"
           >
             Làm lại bài kiểm tra
           </button>
@@ -488,7 +500,10 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
             <h1 className="text-2xl font-black text-amber-900">DÂN TỘC</h1>
           </motion.div>
           <motion.button
-            onClick={() => onViewChange?.("theory")}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'instant' });
+              onViewChange?.("home");
+            }}
             className="px-6 py-2 bg-gradient-to-r from-red-700 to-red-900 text-amber-50 rounded-lg font-medium flex items-center gap-2 hover:shadow-lg transition-shadow cursor-pointer"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
@@ -500,7 +515,7 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
 
       <div className="flex relative">
         {/* Left Sidebar - Table of Contents */}
-        <aside className="fixed left-0 top-24 h-125 w-56 overflow-y-auto hidden lg:block pt-8 pl-4 pr-4 bg-gradient-to-b from-amber-50/50 to-transparent border-r border-b border-orange-200 z-30">
+        <aside className="fixed left-0 top-24 h-140 w-56 overflow-y-auto hidden lg:block pt-8 pl-4 pr-4 bg-gradient-to-b from-amber-50/50 to-transparent border-r border-b border-orange-200 z-30">
           <div className="space-y-2">
             <h3 className="text-sm font-black text-gray-700 uppercase tracking-widest mb-6 px-2">
               Mục Lục
@@ -561,8 +576,8 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
 
             {/* Historical Forms */}
             <ContentSection id="hinh-thuc-cong-dong" className="mb-24">
-              <div className="bg-zinc-900 p-8 border-l-4 border-red-600">
-                <motion.h3 className="text-3xl font-bold mb-6 text-gray-100">
+              <div className="bg-gradient-to-br from-amber-50 to-orange-100 p-10 rounded-xl border border-orange-500">
+                <motion.h3 className="text-3xl font-black mb-6 text-gray-900">
                   Các Hình Thức Cộng Đồng Người Trước Khi Hình Thành Dân Tộc
                 </motion.h3>
 
@@ -616,8 +631,8 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
 
             {/* Ethnicity/Nation Concept */}
             <ContentSection id="dan-toc-khoa-niem" className="mb-24">
-              <div className="bg-zinc-900 p-8 border-l-4 border-red-600">
-                <motion.h3 className="text-3xl font-bold mb-6 text-gray-100">
+              <div className="bg-gradient-to-br from-amber-50 to-orange-100 p-10 rounded-xl border border-orange-500">
+                <motion.h3 className="text-3xl font-black mb-6 text-gray-900">
                   Dân Tộc - Hình Thức Cộng Đồng Người Phổ Biến Hiện Nay
                 </motion.h3>
 
@@ -687,8 +702,8 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
 
             {/* Formation Process */}
             <ContentSection id="qua-trinh-hinh-thanh" className="mb-24">
-              <div className="bg-zinc-900 p-8 border-l-4 border-red-600">
-                <motion.h3 className="text-3xl font-bold mb-6 text-gray-100">
+              <div className="bg-gradient-to-br from-amber-50 to-orange-100 p-10 rounded-xl border border-orange-500">
+                <motion.h3 className="text-3xl font-black mb-6 text-gray-900">
                   Quá Trình Hình Thành Dân Tộc
                 </motion.h3>
 
@@ -747,8 +762,8 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
 
             {/* Class-Ethnicity Relationship */}
             <ContentSection id="moi-quan-he" className="mb-24">
-              <div className="bg-zinc-900 p-8 border-l-4 border-red-600">
-                <motion.h3 className="text-3xl font-bold mb-6 text-gray-100">
+              <div className="bg-gradient-to-br from-amber-50 to-orange-100 p-10 rounded-xl border border-orange-500">
+                <motion.h3 className="text-3xl font-black mb-6 text-gray-900">
                   Mối Quan Hệ Giữa Giai Cấp - Dân Tộc - Nhân Loại
                 </motion.h3>
                 <h4 className="text-2xl font-bold text-red-700 mb-4">Quan hệ giai cấp - dân tộc</h4>
@@ -827,8 +842,8 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
 
             {/* Contemporary Relevance */}
             <ContentSection id="y-nghia-thuc-tien" className="mb-24">
-              <div className="bg-zinc-900 p-8 border-l-4 border-red-600">
-                <motion.h3 className="text-3xl font-bold mb-6 text-gray-100">
+              <div className="bg-gradient-to-br from-amber-50 to-orange-100 p-10 rounded-xl border border-orange-500">
+                <motion.h3 className="text-3xl font-black mb-6 text-gray-900">
                   Ý Nghĩa Thực Tiễn Ở Việt Nam
                 </motion.h3>
 
@@ -851,12 +866,12 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
                       </div>
                     </div>
                   </div>
-
-                  <div className="bg-black/50 p-6 border-l-4 border-red-600">
-                    <p className="text-xl font-bold text-red-400 text-center">
+                  <div className="bg-white/70 backdrop-blur p-6 border-l-4 border-red-700 italic text-gray-800 rounded-lg shadow-sm">
+                    <p className="text-xl font-bold text-red-600 text-center">
                       Đại đoàn kết dân tộc là đường lối chiến lược của cách mạng Việt Nam
                     </p>
                   </div>
+                  
                 </div>
               </div>
             </ContentSection>
@@ -880,8 +895,8 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
               <motion.h3 className="text-4xl font-bold mb-8 text-red-700 text-center">
                 Kiểm Tra Kết Thúc
               </motion.h3>
-              <p className="text-center text-gray-300 mb-8 max-w-2xl mx-auto">
-                Hoàn thành bài kiểm tra gồm 15 câu hỏi để kiểm tra kiến thức của bạn về dân tộc và chủ nghĩa Mác - Lênin
+              <p className="text-center text-black-200 mb-8 max-w-2xl mx-auto">
+                Hoàn thành bài kiểm tra gồm 5 câu hỏi để kiểm tra kiến thức của bạn về dân tộc và chủ nghĩa Mác - Lênin
               </p>
               <QuizComponent />
             </ContentSection>
