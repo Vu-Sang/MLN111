@@ -107,7 +107,7 @@ function ParallaxImage({ src, alt, speed = 0.5 }: { src: string; alt: string; sp
   );
 }
 
-export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home' | 'theory') => void }) {
+export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home' | 'theory' | 'class' | 'ethnicity') => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollY, setScrollY] = useState(0);
   const { scrollYProgress } = useScroll({
