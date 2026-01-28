@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'motion/react';
-import { ArrowRight, BookOpen, Users, TrendingUp, ChevronDown, CheckCircle, XCircle } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, TrendingUp, ChevronDown, CheckCircle, XCircle, ChevronRight } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import banner from "../../assets/images/banner3.jpg";
+import dantoc from "../../assets/images/Dantoc.jpg";
+import giaicap from '../../assets/images/giaicap.jpg';
 
 /// Navigation handler for internal routes
 type ViewType = 'home' | 'theory' | 'class' | 'ethnicity';
@@ -531,7 +533,15 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Sách
+              Sách Lật
+            </motion.button>
+            <motion.button
+              onClick={() => scrollToSection('mindmap')}
+              className={`font-medium transition-colors duration-300 hover:text-red-700 ${navColor}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Sơ Đồ
             </motion.button>
             <motion.button
               onClick={() => scrollToSection('cta')}
@@ -821,13 +831,17 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 whileHover={{ y: -20, transition: { duration: 0.3 } }}
-                className="group relative bg-gradient-to-br from-orange-100 rounded-xl to-amber-50 p-12 md:p-14 border border-orange-200 hover:border-red-700 transition-all duration-500 cursor-pointer overflow-hidden shadow-sm hover:shadow-lg"
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'instant' });
+                  onViewChange?.(concept.view as ViewType);
+                }}
+                className="group relative bg-gradient-to-br from-orange-100 to-amber-50 p-12 md:p-14 border border-orange-200 hover:border-red-700 transition-all duration-500 cursor-pointer overflow-hidden shadow-sm hover:shadow-lg rounded-xl"
               >
+
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-red-700/0 to-red-700/0 group-hover:from-red-700/5 group-hover:to-transparent"
                   transition={{ duration: 0.5 }}
                 />
-
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-8">
                     <motion.span
@@ -840,6 +854,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                     >
                       {concept.number}
                     </motion.span>
+
                     <motion.div
                       onClick={() => {
                         window.scrollTo({ top: 0, behavior: 'instant' });
@@ -860,7 +875,13 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                     {concept.description}
                   </p>
 
-
+                  <motion.div
+                    className="flex items-center gap-2 text-red-700 font-semibold text-lg pt-2 border-b border-red-700/20 w-max cursor-pointer"
+                    whileHover={{ x: 10 }}
+                  >
+                    <span>Khám phá</span>
+                    <ChevronRight className="w-5 h-5" />
+                  </motion.div>
                 </div>
               </motion.div>
             ))}
@@ -971,7 +992,109 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
           }}
         />
       </div>
+      <section
+        id="mindmap"
+        className="py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50"
+      >
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection>
 
+            {/* Title */}
+            <motion.h2
+              className="text-5xl md:text-7xl font-black text-center mb-20"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
+                Sơ Đồ Tư Duy Tổng Hợp
+              </span>
+            </motion.h2>
+
+            {/* Grid images */}
+            <div className="grid md:grid-cols-2 gap-16">
+
+              {/* Giai cấp */}
+              <motion.div
+                whileHover={{ y: -16 }}
+                transition={{ duration: 0.4 }}
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: "instant" });
+                  onViewChange?.("class");
+                }}
+                className="group cursor-pointer relative overflow-hidden rounded-2xl border border-red-700/30 shadow-lg"
+              >
+                <img
+                  src={giaicap}
+                  alt="Sơ đồ tư duy Giai cấp"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+                <div className="absolute bottom-8 left-8 z-10">
+                  <h3 className="text-4xl font-black text-white mb-2">
+                    Giai Cấp
+                  </h3>
+                  <p className="text-white/80 italic">
+                    Cơ cấu xã hội – đấu tranh – vai trò lịch sử
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Dân tộc */}
+              <motion.div
+                whileHover={{ y: -16 }}
+                transition={{ duration: 0.4 }}
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: "instant" });
+                  onViewChange?.("ethnicity");
+                }}
+                className="group cursor-pointer relative overflow-hidden rounded-2xl border border-gray-700/30 shadow-lg"
+              >
+                <img
+                  src={dantoc}
+                  alt="Sơ đồ tư duy Dân tộc"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+                <div className="absolute bottom-8 left-8 z-10">
+                  <h3 className="text-4xl font-black text-white mb-2">
+                    Dân Tộc
+                  </h3>
+                  <p className="text-white/80 italic">
+                    Lãnh thổ – kinh tế – văn hóa – ý thức dân tộc
+                  </p>
+                </div>
+              </motion.div>
+
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+ {/* Gradient Transition Layer */}
+      <div className="h-32 relative">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-b from-black/30 via-amber-900/20 to-transparent"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        />
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-b from-red-950/20 via-orange-400/10 to-transparent"
+          animate={{
+            opacity: [0.4, 0.6, 0.4],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </div>
       {/* Final CTA */}
       <section id="cta" className="py-10 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50\">
         <div className="max-w-7xl mx-auto text-center">

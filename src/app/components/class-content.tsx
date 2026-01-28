@@ -3,6 +3,8 @@ import { motion, useInView } from 'motion/react';
 import { ChevronRight, BookOpen, Users, TrendingUp, Zap, CheckCircle, XCircle } from 'lucide-react';
 import dauTranhGiaiCap from '../../assets/images/dautranhgiaicap.jpg';
 import vidu from '../../assets/images/image.png';
+    import giaicap from '../../assets/images/giaicap.jpg';
+
 interface Question {
     id: number;
     question: string;
@@ -249,215 +251,215 @@ function QuizComponent() {
     };
 
     return (
-      <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-gradient-to-br from-orange-100 to-amber-100 p-8 border-2 border-red-700 rounded-lg"
-    >
-      {!showFinalResults ? (
-        <>
-          <div className="mb-8">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-2xl font-bold text-red-700">Câu {currentQuestion + 1}</h3>
-              <div className="text-sm text-gray-700">{currentQuestion + 1}/{quizQuestions.length}</div>
-            </div>
-            <div className="w-full bg-gray-400 rounded-full h-2">
-              <div
-                className="bg-red-700 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${((currentQuestion + 1) / quizQuestions.length) * 100}%` }}
-              />
-            </div>
-            <div className="mt-2 text-sm text-gray-700">
-              <span className="font-semibold">{question.category === 'class' ? '📚 Giai Cấp' : '🌍 Dân Tộc'}</span>
-            </div>
-          </div>
-
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-900 mb-6">{question.question}</h4>
-
-            <div className="space-y-3">
-              {question.options.map((option, idx) => {
-                const isSelected = currentAnswer === option;
-                const isOptionCorrect = option === question.correctAnswer;
-                const showAsCorrect = isSelected && isOptionCorrect;
-                const showAsIncorrect = isSelected && !isOptionCorrect;
-
-                return (
-                  <motion.div
-                    key={idx}
-                    className={`rounded-lg border-2 transition-all ${showAsCorrect
-                      ? 'border-green-600 bg-green-100'
-                      : showAsIncorrect
-                        ? 'border-red-600 bg-red-100'
-                        : isSelected
-                          ? 'border-yellow-600 bg-yellow-100'
-                          : 'border-orange-300 bg-white'
-                      }`}
-                  >
-                    <button
-                      onClick={() => !isAnswered && handleSelectAnswer(option)}
-                      className="w-full p-4 text-left"
-                      disabled={isAnswered}
-                    >
-                      <div className="flex items-start gap-3">
-                        <div
-                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${showAsCorrect
-                            ? 'border-green-600 bg-green-600'
-                            : showAsIncorrect
-                              ? 'border-red-600 bg-red-600'
-                              : isSelected
-                                ? 'border-yellow-600 bg-yellow-600'
-                                : 'border-orange-400'
-                            }`}
-                        >
-                          {showAsCorrect && <CheckCircle className="w-5 h-5 text-white" />}
-                          {showAsIncorrect && <XCircle className="w-5 h-5 text-white" />}
-                          {isSelected && !isAnswered && (
-                            <div className="w-2 h-2 bg-yellow-700 rounded-full" />
-                          )}
+        <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-gradient-to-br from-orange-100 to-amber-100 p-8 border-2 border-red-700 rounded-lg"
+        >
+            {!showFinalResults ? (
+                <>
+                    <div className="mb-8">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="text-2xl font-bold text-red-700">Câu {currentQuestion + 1}</h3>
+                            <div className="text-sm text-gray-700">{currentQuestion + 1}/{quizQuestions.length}</div>
                         </div>
-                        <div className="flex-1">
-                          <span className="text-gray-900">{option}</span>
-                          {showAsCorrect && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: 'auto' }}
-                              className="mt-3 p-3 bg-green-200 rounded border-l-2 border-green-600"
-                            >
-                              <p className="text-green-800 text-sm">
-                                <span className="font-semibold">✓ Chính xác!</span>
-                              </p>
-                              <p className="text-green-700 text-sm mt-2 italic">
-                                {question.explanation}
-                              </p>
-                            </motion.div>
-                          )}
-                          {showAsIncorrect && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: 'auto' }}
-                              className="mt-3 p-3 bg-red-200 rounded border-l-2 border-red-600"
-                            >
-                              <p className="text-red-800 text-sm font-semibold">✗ Sai rồi!</p>
-                              <p className="text-red-700 text-sm mt-2">
-                                Đáp án đúng là: <span className="font-semibold">{question.correctAnswer}</span>
-                              </p>
-                              <p className="text-red-700 text-sm mt-2 italic">
-                                {question.explanation}
-                              </p>
-                            </motion.div>
-                          )}
+                        <div className="w-full bg-gray-400 rounded-full h-2">
+                            <div
+                                className="bg-red-700 h-2 rounded-full transition-all duration-300"
+                                style={{ width: `${((currentQuestion + 1) / quizQuestions.length) * 100}%` }}
+                            />
                         </div>
-                      </div>
-                    </button>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="flex gap-4 justify-between mt-8">
-            <button
-              onClick={handlePrev}
-              disabled={currentQuestion === 0}
-              className="px-6 py-2 bg-orange-200 hover:bg-orange-300 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 rounded-lg transition-colors font-semibold"
-            >
-              ← Quay lại
-            </button>
-
-            {currentQuestion === quizQuestions.length - 1 ? (
-              <button
-                onClick={handleSubmit}
-                disabled={Object.keys(selectedAnswers).length !== quizQuestions.length}
-                className="px-8 py-2 bg-red-700 hover:bg-red-800 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors"
-              >
-                Nộp bài
-              </button>
-            ) : (
-              <button
-                onClick={handleNext}
-                disabled={!isAnswered}
-                className="px-6 py-2 bg-red-700 hover:bg-red-800 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors flex items-center gap-2 font-semibold"
-              >
-                Tiếp theo →
-              </button>
-            )}
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="text-center mb-12">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="inline-block mb-6"
-            >
-              <div className="text-6xl font-bold text-red-700 mb-2">
-                {score}/{quizQuestions.length}
-              </div>
-              <div className="text-xl text-gray-700">
-                {Math.round((score / quizQuestions.length) * 100)}%
-              </div>
-            </motion.div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              {score >= quizQuestions.length * 0.8
-                ? '🎉 Xuất sắc!'
-                : score >= quizQuestions.length * 0.6
-                  ? '👍 Tốt!'
-                  : '📚 Cần ôn lại'}
-            </h3>
-            <p className="text-gray-700">
-              Bạn đã trả lời đúng {score} trên {quizQuestions.length} câu hỏi
-            </p>
-          </div>
-
-          <div className="space-y-4 mb-8 max-h-96 overflow-y-auto">
-            {quizQuestions.map((q, idx) => {
-              const userAnswer = selectedAnswers[idx];
-              const isUserCorrect = userAnswer === q.correctAnswer;
-              return (
-                <div
-                  key={q.id}
-                  className={`p-4 rounded-lg border-l-4 ${isUserCorrect ? 'bg-green-100 border-green-600' : 'bg-red-100 border-red-600'
-                    }`}
-                >
-                  <div className="flex gap-3 mb-2">
-                    {isUserCorrect ? (
-                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    ) : (
-                      <XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-                    )}
-                    <div className="flex-1">
-                      <p className="font-semibold text-gray-900">Câu {idx + 1} ({q.category === 'class' ? '📚 Giai Cấp' : '🌍 Dân Tộc'}): {q.question}</p>
-                      <p className="text-sm text-gray-700 mt-2">
-                        <span className="font-semibold">Câu trả lời của bạn:</span> {userAnswer || 'Không trả lời'}
-                      </p>
-                      {!isUserCorrect && (
-                        <p className="text-sm text-gray-700">
-                          <span className="font-semibold">Đáp án đúng:</span> {q.correctAnswer}
-                        </p>
-                      )}
-                      <p className="text-sm text-gray-800 mt-2 italic">
-                        <span className="font-semibold">Giải thích:</span> {q.explanation}
-                      </p>
+                        <div className="mt-2 text-sm text-gray-700">
+                            <span className="font-semibold">{question.category === 'class' ? '📚 Giai Cấp' : '🌍 Dân Tộc'}</span>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
 
-          <button
-            onClick={handleReset}
-            className="w-full px-6 py-3 bg-red-700 hover:bg-red-800 text-white rounded-lg font-semibold transition-colors"
-          >
-            Làm lại bài kiểm tra
-          </button>
-        </>
-      )}
-    </motion.div>
+                    <div className="mb-8">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-6">{question.question}</h4>
+
+                        <div className="space-y-3">
+                            {question.options.map((option, idx) => {
+                                const isSelected = currentAnswer === option;
+                                const isOptionCorrect = option === question.correctAnswer;
+                                const showAsCorrect = isSelected && isOptionCorrect;
+                                const showAsIncorrect = isSelected && !isOptionCorrect;
+
+                                return (
+                                    <motion.div
+                                        key={idx}
+                                        className={`rounded-lg border-2 transition-all ${showAsCorrect
+                                            ? 'border-green-600 bg-green-100'
+                                            : showAsIncorrect
+                                                ? 'border-red-600 bg-red-100'
+                                                : isSelected
+                                                    ? 'border-yellow-600 bg-yellow-100'
+                                                    : 'border-orange-300 bg-white'
+                                            }`}
+                                    >
+                                        <button
+                                            onClick={() => !isAnswered && handleSelectAnswer(option)}
+                                            className="w-full p-4 text-left"
+                                            disabled={isAnswered}
+                                        >
+                                            <div className="flex items-start gap-3">
+                                                <div
+                                                    className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${showAsCorrect
+                                                        ? 'border-green-600 bg-green-600'
+                                                        : showAsIncorrect
+                                                            ? 'border-red-600 bg-red-600'
+                                                            : isSelected
+                                                                ? 'border-yellow-600 bg-yellow-600'
+                                                                : 'border-orange-400'
+                                                        }`}
+                                                >
+                                                    {showAsCorrect && <CheckCircle className="w-5 h-5 text-white" />}
+                                                    {showAsIncorrect && <XCircle className="w-5 h-5 text-white" />}
+                                                    {isSelected && !isAnswered && (
+                                                        <div className="w-2 h-2 bg-yellow-700 rounded-full" />
+                                                    )}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <span className="text-gray-900">{option}</span>
+                                                    {showAsCorrect && (
+                                                        <motion.div
+                                                            initial={{ opacity: 0, height: 0 }}
+                                                            animate={{ opacity: 1, height: 'auto' }}
+                                                            className="mt-3 p-3 bg-green-200 rounded border-l-2 border-green-600"
+                                                        >
+                                                            <p className="text-green-800 text-sm">
+                                                                <span className="font-semibold">✓ Chính xác!</span>
+                                                            </p>
+                                                            <p className="text-green-700 text-sm mt-2 italic">
+                                                                {question.explanation}
+                                                            </p>
+                                                        </motion.div>
+                                                    )}
+                                                    {showAsIncorrect && (
+                                                        <motion.div
+                                                            initial={{ opacity: 0, height: 0 }}
+                                                            animate={{ opacity: 1, height: 'auto' }}
+                                                            className="mt-3 p-3 bg-red-200 rounded border-l-2 border-red-600"
+                                                        >
+                                                            <p className="text-red-800 text-sm font-semibold">✗ Sai rồi!</p>
+                                                            <p className="text-red-700 text-sm mt-2">
+                                                                Đáp án đúng là: <span className="font-semibold">{question.correctAnswer}</span>
+                                                            </p>
+                                                            <p className="text-red-700 text-sm mt-2 italic">
+                                                                {question.explanation}
+                                                            </p>
+                                                        </motion.div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </motion.div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <div className="flex gap-4 justify-between mt-8">
+                        <button
+                            onClick={handlePrev}
+                            disabled={currentQuestion === 0}
+                            className="px-6 py-2 bg-orange-200 hover:bg-orange-300 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 rounded-lg transition-colors font-semibold"
+                        >
+                            ← Quay lại
+                        </button>
+
+                        {currentQuestion === quizQuestions.length - 1 ? (
+                            <button
+                                onClick={handleSubmit}
+                                disabled={Object.keys(selectedAnswers).length !== quizQuestions.length}
+                                className="px-8 py-2 bg-red-700 hover:bg-red-800 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors"
+                            >
+                                Nộp bài
+                            </button>
+                        ) : (
+                            <button
+                                onClick={handleNext}
+                                disabled={!isAnswered}
+                                className="px-6 py-2 bg-red-700 hover:bg-red-800 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors flex items-center gap-2 font-semibold"
+                            >
+                                Tiếp theo →
+                            </button>
+                        )}
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div className="text-center mb-12">
+                        <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="inline-block mb-6"
+                        >
+                            <div className="text-6xl font-bold text-red-700 mb-2">
+                                {score}/{quizQuestions.length}
+                            </div>
+                            <div className="text-xl text-gray-700">
+                                {Math.round((score / quizQuestions.length) * 100)}%
+                            </div>
+                        </motion.div>
+                        <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                            {score >= quizQuestions.length * 0.8
+                                ? '🎉 Xuất sắc!'
+                                : score >= quizQuestions.length * 0.6
+                                    ? '👍 Tốt!'
+                                    : '📚 Cần ôn lại'}
+                        </h3>
+                        <p className="text-gray-700">
+                            Bạn đã trả lời đúng {score} trên {quizQuestions.length} câu hỏi
+                        </p>
+                    </div>
+
+                    <div className="space-y-4 mb-8 max-h-96 overflow-y-auto">
+                        {quizQuestions.map((q, idx) => {
+                            const userAnswer = selectedAnswers[idx];
+                            const isUserCorrect = userAnswer === q.correctAnswer;
+                            return (
+                                <div
+                                    key={q.id}
+                                    className={`p-4 rounded-lg border-l-4 ${isUserCorrect ? 'bg-green-100 border-green-600' : 'bg-red-100 border-red-600'
+                                        }`}
+                                >
+                                    <div className="flex gap-3 mb-2">
+                                        {isUserCorrect ? (
+                                            <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                                        ) : (
+                                            <XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                                        )}
+                                        <div className="flex-1">
+                                            <p className="font-semibold text-gray-900">Câu {idx + 1} ({q.category === 'class' ? '📚 Giai Cấp' : '🌍 Dân Tộc'}): {q.question}</p>
+                                            <p className="text-sm text-gray-700 mt-2">
+                                                <span className="font-semibold">Câu trả lời của bạn:</span> {userAnswer || 'Không trả lời'}
+                                            </p>
+                                            {!isUserCorrect && (
+                                                <p className="text-sm text-gray-700">
+                                                    <span className="font-semibold">Đáp án đúng:</span> {q.correctAnswer}
+                                                </p>
+                                            )}
+                                            <p className="text-sm text-gray-800 mt-2 italic">
+                                                <span className="font-semibold">Giải thích:</span> {q.explanation}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    <button
+                        onClick={handleReset}
+                        className="w-full px-6 py-3 bg-red-700 hover:bg-red-800 text-white rounded-lg font-semibold transition-colors"
+                    >
+                        Làm lại bài kiểm tra
+                    </button>
+                </>
+            )}
+        </motion.div>
     );
 }
 
@@ -536,6 +538,7 @@ export function ClassContent({
             'dau-tranh',
             'cau-truc',
             'ket-luan',
+            'sodotuduy',
             'quiz',
         ];
 
@@ -562,6 +565,7 @@ export function ClassContent({
         { id: 'dau-tranh', title: 'Đấu Tranh Giai Cấp', icon: '⚡' },
         { id: 'cau-truc', title: 'Cấu Trúc Giai Cấp', icon: '🏗️' },
         { id: 'ket-luan', title: 'Kết Luận', icon: '✓' },
+        { id: 'sodotuduy', title: 'Sơ Đồ Tư Duy', icon: '🧠' },
         { id: 'quiz', title: 'Kiểm Tra', icon: '📝' },
     ];
 
@@ -865,6 +869,22 @@ export function ClassContent({
                                 để xóa bỏ hoàn toàn chế độ giai cấp và xây dựng xã hội không giai cấp - xã hội chủ nghĩa cộng sản.
                             </p>
                         </ContentSection>
+                        <ContentSection
+                            id="sodotuduy"
+                            className="mb-24 py-16 bg-gradient-to-r from-red-600/20 via-transparent to-red-600/20 px-8 rounded-lg border border-red-600/30"
+                        >
+                            <motion.h3 className="text-4xl font-bold mb-8 text-red-700 text-center">
+                                Sơ đồ tư duy
+                            </motion.h3>
+                            <div className="flex justify-center">
+                                <img
+                                    src={giaicap}
+                                    alt="Giai Cấp"
+                                    className="max-w-3xl w-full rounded-xl shadow-2xl border border-red-600/40"
+                                />
+                            </div>
+                        </ContentSection>
+
 
                         <ContentSection id="quiz" className="mb-24">
                             <motion.h3 className="text-4xl font-bold mb-8 text-red-700 text-center">
