@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'motion/react';
 import { ChevronRight, Globe, Flag, Users, Zap, BookOpen, TrendingUp, CheckCircle, XCircle } from 'lucide-react';
-
+import dantoc from "../../assets/images/Dantoc.jpg";
 interface Question {
   id: number;
   question: string;
@@ -457,6 +457,8 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
       'moi-quan-he',
       'y-nghia-thuc-tien',
       'ket-luan',
+      'quiz',
+      'sodotuduy',
     ];
 
     const handleScroll = () => {
@@ -485,6 +487,7 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
     { id: 'y-nghia-thuc-tien', title: 'Ý Nghĩa Thực Tiễn', icon: '🎯' },
     { id: 'ket-luan', title: 'Kết Luận', icon: '✓' },
     { id: 'quiz', title: 'Kiểm Tra', icon: '📝' },
+    { id: 'sodotuduy', title: 'Sơ Đồ Tư Duy', icon: '🧠' },
   ];
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 text-gray-900">
@@ -515,7 +518,7 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
 
       <div className="flex relative">
         {/* Left Sidebar - Table of Contents */}
-        <aside className="fixed left-0 top-24 h-140 w-56 overflow-y-auto hidden lg:block pt-8 pl-4 pr-4 bg-gradient-to-b from-amber-50/50 to-transparent border-r border-b border-orange-200 z-30">
+        <aside className="fixed left-0 top-24 h-160 w-60 overflow-y-auto hidden lg:block pt-8 pl-4 pr-4 bg-gradient-to-b from-amber-50/50 to-transparent border-r border-b border-orange-200 z-30">
           <div className="space-y-2">
             <h3 className="text-sm font-black text-gray-700 uppercase tracking-widest mb-6 px-2">
               Mục Lục
@@ -871,7 +874,7 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
                       Đại đoàn kết dân tộc là đường lối chiến lược của cách mạng Việt Nam
                     </p>
                   </div>
-                  
+
                 </div>
               </div>
             </ContentSection>
@@ -900,10 +903,25 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
               </p>
               <QuizComponent />
             </ContentSection>
+            <ContentSection
+              id="sodotuduy"
+              className="mb-24 py-16 bg-gradient-to-r from-red-600/20 via-transparent to-red-600/20 px-8 rounded-lg border border-red-600/30"
+            >
+              <motion.h3 className="text-4xl font-bold mb-8 text-red-700 text-center">
+                Sơ đồ tư duy
+              </motion.h3>
+              <div className="flex justify-center">
+                <img
+                  src={dantoc}
+                  alt="Dân tộc"
+                  className="max-w-3xl w-full rounded-xl shadow-2xl border border-red-600/40"
+                />
+              </div>
+            </ContentSection>
+
           </div>
         </main>
       </div >
-
       {/* Footer */}
       < footer className="border-t border-zinc-800 bg-black py-12 px-6" >
         <div className="max-w-7xl mx-auto text-center text-gray-500">
