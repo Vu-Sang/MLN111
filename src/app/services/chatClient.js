@@ -15,7 +15,7 @@ function extractKeywords(text) {
   const stopWords = [
     "la", "gi", "theo", "thi", "cua", "va", "trong", "voi", "nhu", "the", "nao",
     "co", "duoc", "ra", "den", "khi", "ma", "hay", "se", "da", "roi", "chu",
-    "biet", "hieu", "noi", "ve", "cho", "moi", "tat", "ca", "nhung", "cac",
+    "biet", "hieu", "ve", "cho", "moi", "tat", "ca", "nhung", "cac",
     "mot", "hai", "ba", "do", "ay", "nay", "kia", "sao", "dau", "di", "len",
     "xuong", "vao", "ra", "tu", "ban", "minh", "toi", "ho", "no", "ai"
   ];
