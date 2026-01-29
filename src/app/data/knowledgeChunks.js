@@ -82,7 +82,7 @@ export const knowledgeChunks = [
       topic: "thuc tien viet nam",
       content:
         "Ở Việt Nam, lợi ích của giai cấp công nhân, nhân dân lao động và lợi ích của toàn dân tộc là thống nhất. Đấu tranh giai cấp hiện nay là đấu tranh chống nghèo nàn, lạc hậu, tham nhũng và các thế lực phá hoại khối đại đoàn kết."
-    }
+    },
     // Câu hỏi trắc nghiệm về Giai cấp
   {
     source: "Câu hỏi trắc nghiệm",
