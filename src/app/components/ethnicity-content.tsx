@@ -485,10 +485,20 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
     { id: 'qua-trinh-hinh-thanh', title: 'Quá Trình Hình Thành', icon: '📜' },
     { id: 'moi-quan-he', title: 'Giai Cấp & Dân Tộc', icon: '⚡' },
     { id: 'y-nghia-thuc-tien', title: 'Ý Nghĩa Thực Tiễn', icon: '🎯' },
+    { id: 'sodotuduy', title: 'Sơ Đồ Tổng Quan', icon: '🧠' },
+
     { id: 'ket-luan', title: 'Kết Luận', icon: '✓' },
     { id: 'quiz', title: 'Kiểm Tra', icon: '📝' },
-    { id: 'sodotuduy', title: 'Sơ Đồ Tư Duy', icon: '🧠' },
   ];
+
+  const goToClassMindmap = () => {
+    // switch to Class view (no auto-scroll)
+    onViewChange?.('class');
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }, 1);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 text-gray-900">
       {/* Header */}
@@ -507,18 +517,36 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
               window.scrollTo({ top: 0, behavior: 'instant' });
               onViewChange?.("home");
             }}
-            className="px-6 py-2 bg-gradient-to-r from-red-700 to-red-900 text-amber-50 rounded-lg font-medium flex items-center gap-2 hover:shadow-lg transition-shadow cursor-pointer"
+            className="px-5 py-2
+bg-amber-50 text-red-800
+border border-red-700/30
+rounded-lg font-semibold
+flex items-center gap-2
+hover:bg-red-700 hover:text-amber-50
+hover:shadow-lg
+transition-all duration-300 cursor-pointer"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="hidden sm:inline">Quay Lại</span>
+            <span className="hidden sm:inline">Trang chủ</span>
+          </motion.button>
+
+
+          {/* Switch to Class */}
+          <motion.button
+            onClick={() => goToClassMindmap()}
+            className="px-6 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg font-medium flex items-center gap-2 transition-shadow cursor-pointer"
+            whileHover={{ scale: 1.03, y: -2 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <span className="hidden sm:inline">Giai Cấp</span>
           </motion.button>
         </div>
       </header>
 
       <div className="flex relative">
         {/* Left Sidebar - Table of Contents */}
-        <aside className="fixed left-0 top-24 h-160 w-60 overflow-y-auto hidden lg:block pt-8 pl-4 pr-4 bg-gradient-to-b from-amber-50/50 to-transparent border-r border-b border-orange-200 z-30">
+        <aside className="fixed left-0 top-24 h-160 w-65 overflow-y-auto hidden lg:block pt-8 pl-4 pr-4 bg-gradient-to-b from-amber-50/50 to-transparent border-r border-b border-orange-200 z-30">
           <div className="space-y-2">
             <h3 className="text-sm font-black text-gray-700 uppercase tracking-widest mb-6 px-2">
               Mục Lục
@@ -878,7 +906,21 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
                 </div>
               </div>
             </ContentSection>
-
+            <ContentSection
+              id="sodotuduy"
+              className="mb-24 py-16 bg-gradient-to-br from-amber-50 to-orange-100 p-10 rounded-xl border border-orange-500"
+            >
+              <motion.h3 className="text-4xl font-bold mb-8 text-red-700 text-center">
+                Sơ đồ tổng quan về Dân tộc
+              </motion.h3>
+              <div className="flex justify-center">
+                <img
+                  src={dantoc}
+                  alt="Dân tộc"
+                  className="max-w-3xl w-full rounded-xl shadow-2xl border border-red-600/40"
+                />
+              </div>
+            </ContentSection>
             {/* Conclusion */}
             <ContentSection id="ket-luan" className="mb-24 py-16 bg-gradient-to-r from-red-600/20 via-transparent to-red-600/20 px-8 rounded-lg border border-red-600/30">
               <motion.h3 className="text-4xl font-bold mb-8 text-red-700 text-center">
@@ -902,21 +944,6 @@ export function EthnicityContent({ onViewChange }: { onViewChange?: (view: strin
                 Hoàn thành bài kiểm tra gồm 5 câu hỏi để kiểm tra kiến thức của bạn về dân tộc và chủ nghĩa Mác - Lênin
               </p>
               <QuizComponent />
-            </ContentSection>
-            <ContentSection
-              id="sodotuduy"
-              className="mb-24 py-16 bg-gradient-to-r from-red-600/20 via-transparent to-red-600/20 px-8 rounded-lg border border-red-600/30"
-            >
-              <motion.h3 className="text-4xl font-bold mb-8 text-red-700 text-center">
-                Sơ đồ tư duy
-              </motion.h3>
-              <div className="flex justify-center">
-                <img
-                  src={dantoc}
-                  alt="Dân tộc"
-                  className="max-w-3xl w-full rounded-xl shadow-2xl border border-red-600/40"
-                />
-              </div>
             </ContentSection>
 
           </div>

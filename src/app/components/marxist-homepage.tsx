@@ -5,6 +5,9 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import banner from "../../assets/images/banner3.jpg";
 import dantoc from "../../assets/images/Dantoc.jpg";
 import giaicap from '../../assets/images/giaicap.jpg';
+import background from '../../assets/images/background.jpg';
+import background2 from '../../assets/images/backgroand2.jpg';
+import background3 from '../../assets/images/background3.jpg';
 
 /// Navigation handler for internal routes
 type ViewType = 'home' | 'theory' | 'class' | 'ethnicity';
@@ -47,9 +50,9 @@ const navigateToSection = (
     setTimeout(() => {
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    }, 150);
+    }, 350);
   }
 };
 
@@ -767,32 +770,22 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
         </motion.div>
       </section>
 
-      {/* Gradient Transition Layer */}
-      <div className="h-32 relative">
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-b from-black/30 via-amber-900/20 to-transparent"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        />
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-b from-red-950/20 via-orange-400/10 to-transparent"
-          animate={{
-            opacity: [0.4, 0.6, 0.4],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-      </div>
+
       {/* Key Concepts - Grid */}
-      <section id="key-concepts" className="py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50">
-        <div className="max-w-7xl mx-auto">
+      <section id="key-concepts"
+        style={{
+          backgroundImage: `url(${background3})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+        className="relative py-32 px-6 overflow-hidden">
+        
+
+        <div className="max-w-7xl mx-auto relative z-10">
           <AnimatedSection className="mb-20">
             <motion.h2
-              className="text-6xl md:text-8xl font-black text-gray-900 mb-6"
+              className="text-6xl md:text-8xl font-black text-white/90 mb-6"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -835,7 +828,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                   window.scrollTo({ top: 0, behavior: 'instant' });
                   onViewChange?.(concept.view as ViewType);
                 }}
-                className="group relative bg-gradient-to-br from-orange-100 to-amber-50 p-12 md:p-14 border border-orange-200 hover:border-red-700 transition-all duration-500 cursor-pointer overflow-hidden shadow-sm hover:shadow-lg rounded-xl"
+                className="group relative bg-gradient-to-br from-orange-100 to-amber-50 p-12 md:p-14 border border-gray-500 hover:border-red-700 transition-all duration-500 cursor-pointer overflow-hidden shadow-sm hover:shadow-lg rounded-xl"
               >
 
                 <motion.div
@@ -888,7 +881,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
           </div>
         </div>
       </section>
-      {/* Gradient Transition Layer */}
+     {/* Gradient Transition Layer */}
       <div className="h-32 relative">
         <motion.div
           className="absolute inset-0 bg-gradient-to-b from-black/30 via-amber-900/20 to-transparent"
@@ -994,6 +987,12 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
       </div>
       <section
         id="mindmap"
+        style={{
+          backgroundImage: `url(${background})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
         className="py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50"
       >
         <div className="max-w-7xl mx-auto">
@@ -1006,8 +1005,9 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
-                Sơ Đồ Tư Duy Tổng Hợp
+              <span
+                className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
+                Sơ Đồ Tổng Quan
               </span>
             </motion.h2>
 
@@ -1018,10 +1018,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               <motion.div
                 whileHover={{ y: -16 }}
                 transition={{ duration: 0.4 }}
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: "instant" });
-                  onViewChange?.("class");
-                }}
+                onClick={() => navigateToSection('/class-content#sodotuduy', onViewChange)}
                 className="group cursor-pointer relative overflow-hidden rounded-2xl border border-red-700/30 shadow-lg"
               >
                 <img
@@ -1046,10 +1043,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               <motion.div
                 whileHover={{ y: -16 }}
                 transition={{ duration: 0.4 }}
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: "instant" });
-                  onViewChange?.("ethnicity");
-                }}
+                onClick={() => navigateToSection('/ethnicity-content#sodotuduy', onViewChange)}
                 className="group cursor-pointer relative overflow-hidden rounded-2xl border border-gray-700/30 shadow-lg"
               >
                 <img
@@ -1075,7 +1069,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
         </div>
       </section>
 
- {/* Gradient Transition Layer */}
+      {/* Gradient Transition Layer */}
       <div className="h-32 relative">
         <motion.div
           className="absolute inset-0 bg-gradient-to-b from-black/30 via-amber-900/20 to-transparent"
