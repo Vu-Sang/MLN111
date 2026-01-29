@@ -3,7 +3,7 @@ import { motion, useInView } from 'motion/react';
 import { ChevronRight, BookOpen, Users, TrendingUp, Zap, CheckCircle, XCircle } from 'lucide-react';
 import dauTranhGiaiCap from '../../assets/images/dautranhgiaicap.jpg';
 import vidu from '../../assets/images/image.png';
-    import giaicap from '../../assets/images/giaicap.jpg';
+import giaicap from '../../assets/images/giaicap.jpg';
 
 interface Question {
     id: number;
@@ -528,6 +528,13 @@ export function ClassContent({
         requestAnimationFrame(scroll);
     };
 
+    const goToEthnicityMindmap = () => {
+        // switch to Ethnicity view and ensure page is at the top (no further scrolling)
+        onViewChange?.('ethnicity');
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }, 1);
+    };
 
     /* Detect active section on scroll */
     useEffect(() => {
@@ -537,8 +544,8 @@ export function ClassContent({
             'giai-cap-origin',
             'dau-tranh',
             'cau-truc',
-            'ket-luan',
             'sodotuduy',
+            'ket-luan',
             'quiz',
         ];
 
@@ -564,8 +571,8 @@ export function ClassContent({
         { id: 'giai-cap-origin', title: 'Nguồn Gốc & Hình Thành', icon: '🌱' },
         { id: 'dau-tranh', title: 'Đấu Tranh Giai Cấp', icon: '⚡' },
         { id: 'cau-truc', title: 'Cấu Trúc Giai Cấp', icon: '🏗️' },
+        { id: 'sodotuduy', title: 'Sơ Đồ Tổng Quan', icon: '🧠' },
         { id: 'ket-luan', title: 'Kết Luận', icon: '✓' },
-        { id: 'sodotuduy', title: 'Sơ Đồ Tư Duy', icon: '🧠' },
         { id: 'quiz', title: 'Kiểm Tra', icon: '📝' },
     ];
 
@@ -582,17 +589,34 @@ export function ClassContent({
                         <div className="w-3 h-3 bg-red-700 rounded-full" />
                         <h1 className="text-2xl font-black text-amber-900">GIAI CẤP</h1>
                     </motion.div>
-                    {/* Back Button */}
+
                     <motion.button
                         onClick={() => {
                             window.scrollTo({ top: 0, behavior: 'instant' });
                             onViewChange?.("home");
                         }}
-                        className="px-6 py-2 bg-gradient-to-r from-red-700 to-red-900 text-amber-50 rounded-lg font-medium flex items-center gap-2 hover:shadow-lg transition-shadow cursor-pointer"
+                        className="px-5 py-2
+bg-amber-50 text-red-800
+border border-red-700/30
+rounded-lg font-semibold
+flex items-center gap-2
+hover:bg-red-700 hover:text-amber-50
+hover:shadow-lg
+transition-all duration-300 cursor-pointer"
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <span className="hidden sm:inline">Quay Lại</span>
+                        <span className="hidden sm:inline">Trang chủ</span>
+                    </motion.button>
+
+                    {/* Switch to Ethnicity */}
+                    <motion.button
+                        onClick={() => goToEthnicityMindmap()}
+                        className="px-6 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg font-medium flex items-center gap-2 transition-shadow cursor-pointer"
+                        whileHover={{ scale: 1.03, y: -2 }}
+                        whileTap={{ scale: 0.97 }}
+                    >
+                        <span className="hidden sm:inline">Dân Tộc</span>
                     </motion.button>
                 </div>
             </header>
@@ -857,7 +881,21 @@ export function ClassContent({
                                 </div>
                             </div>
                         </ContentSection>
-
+                        <ContentSection
+                            id="sodotuduy"
+                            className="mb-24 py-16 bg-gradient-to-br from-amber-50 to-orange-100 p-10 rounded-xl border border-orange-500"
+                        >
+                            <motion.h3 className="text-4xl font-bold mb-8 text-red-700 text-center">
+                                Sơ đồ tổng quan về Giai cấp
+                            </motion.h3>
+                            <div className="flex justify-center">
+                                <img
+                                    src={giaicap}
+                                    alt="Giai Cấp"
+                                    className="max-w-3xl w-full rounded-xl shadow-2xl border border-red-600/40"
+                                />
+                            </div>
+                        </ContentSection>
                         {/* Conclusion */}
                         <ContentSection id="ket-luan" className="mb-24 py-16 bg-gradient-to-r from-red-600/20 via-transparent to-red-600/20 px-8 rounded-lg border border-red-600/30">
                             <motion.h3 className="text-4xl font-bold mb-8 text-red-700 text-center">
@@ -869,21 +907,7 @@ export function ClassContent({
                                 để xóa bỏ hoàn toàn chế độ giai cấp và xây dựng xã hội không giai cấp - xã hội chủ nghĩa cộng sản.
                             </p>
                         </ContentSection>
-                        <ContentSection
-                            id="sodotuduy"
-                            className="mb-24 py-16 bg-gradient-to-r from-red-600/20 via-transparent to-red-600/20 px-8 rounded-lg border border-red-600/30"
-                        >
-                            <motion.h3 className="text-4xl font-bold mb-8 text-red-700 text-center">
-                                Sơ đồ tư duy
-                            </motion.h3>
-                            <div className="flex justify-center">
-                                <img
-                                    src={giaicap}
-                                    alt="Giai Cấp"
-                                    className="max-w-3xl w-full rounded-xl shadow-2xl border border-red-600/40"
-                                />
-                            </div>
-                        </ContentSection>
+
 
 
                         <ContentSection id="quiz" className="mb-24">
