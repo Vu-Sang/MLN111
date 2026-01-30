@@ -8,6 +8,7 @@ import giaicap from '../../assets/images/giaicap.jpg';
 import background from '../../assets/images/background.jpg';
 import background2 from '../../assets/images/backgroand2.jpg';
 import background3 from '../../assets/images/background3.jpg';
+import thuctien from '../../assets/images/hinhnen.jpg';
 
 /// Navigation handler for internal routes
 type ViewType = 'home' | 'theory' | 'class' | 'ethnicity';
@@ -728,7 +729,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
 
                 <span className="relative z-10 flex items-center gap-3 text-lg font-semibold text-white">
                   Khám Phá Lý Thuyết
-                  {/* <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" /> */}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
                 </span>
               </motion.button>
               {/* <motion.button
@@ -751,23 +752,6 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
             </motion.div>
           </div>
         </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 2 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30"
-        >
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="flex flex-col items-center gap-2 cursor-pointer"
-          >
-            <span className="text-sm text-gray-600 uppercase tracking-widest">Scroll</span>
-            <ChevronDown className="w-6 h-6 text-gray-600" />
-          </motion.div>
-        </motion.div>
       </section>
 
 
@@ -780,7 +764,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
           backgroundRepeat: "no-repeat",
         }}
         className="relative py-32 px-6 overflow-hidden">
-        
+
 
         <div className="max-w-7xl mx-auto relative z-10">
           <AnimatedSection className="mb-20">
@@ -881,7 +865,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
           </div>
         </div>
       </section>
-     {/* Gradient Transition Layer */}
+      {/* Gradient Transition Layer
       <div className="h-32 relative">
         <motion.div
           className="absolute inset-0 bg-gradient-to-b from-black/30 via-amber-900/20 to-transparent"
@@ -900,7 +884,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
             ease: "easeInOut"
           }}
         />
-      </div>
+      </div> */}
       {/* Flipbook Section */}
       <section id="flipbook" className="py-30 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50">
         <div className="max-w-7xl mx-auto ">
@@ -934,7 +918,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
             {/* Flipbook Embed */}
             <div id="flipbook-container" className="relative w-full" style={{ paddingBottom: "55%" }}>
               <iframe
-                src="https://online.fliphtml5.com/fnevn/qayx/"
+                src="https://online.fliphtml5.com/fnevn/kams/"
                 title="Tài Liệu Lý Thuyết Mác - Lênin"
                 className="absolute top-0 left-0 w-full h-full border-0"
                 allowFullScreen={true}
@@ -951,7 +935,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
             className="mt-12 flex flex-wrap gap-6 justify-center"
           >
             <motion.a
-              href="https://online.fliphtml5.com/fnevn/qayx/#p=1"
+              href="https://online.fliphtml5.com/fnevn/kams/"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
@@ -966,7 +950,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
       </section>
 
       {/* Gradient Transition Layer */}
-      <div className="h-32 relative">
+      {/* <div className="h-32 relative">
         <motion.div
           className="absolute inset-0 bg-gradient-to-b from-black/30 via-amber-900/20 to-transparent"
           initial={{ opacity: 0 }}
@@ -984,7 +968,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
             ease: "easeInOut"
           }}
         />
-      </div>
+      </div> */}
       <section
         id="mindmap"
         style={{
@@ -1070,7 +1054,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
       </section>
 
       {/* Gradient Transition Layer */}
-      <div className="h-32 relative">
+      {/* <div className="h-32 relative">
         <motion.div
           className="absolute inset-0 bg-gradient-to-b from-black/30 via-amber-900/20 to-transparent"
           initial={{ opacity: 0 }}
@@ -1088,81 +1072,61 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
             ease: "easeInOut"
           }}
         />
-      </div>
+      </div> */}
       {/* Final CTA */}
-      <section id="cta" className="py-10 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50\">
-        <div className="max-w-7xl mx-auto text-center">
-          <AnimatedSection>
+      <section id="cta"
+        style={{
+          backgroundImage: `url(${thuctien})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+        className="relative py-32 px-6 aspect-[16/9] overflow-hidden">
+        <div className="max-w-7xl mx-auto relative z-10 h-150 " >
+          <AnimatedSection className="mb-20">
             <motion.h2
-              className="text-6xl md:text-9xl font-black mb-8"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1 }}
-            >
-              <span className=" bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent\">
-                Thực Tiễn Việt Nam
-              </span>
-              <br />
-              {/* <span className="bg-gradient-to-r from-red-700 via-red-600 to-red-700 bg-clip-text text-transparent\">
-                Việt Nam
-              </span> */}
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              className="text-6xl md:text-8xl font-black text-black/90 mb-6"
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-2xl italic text-gray-800 mb-16 max-w-4xl mx-auto text-center leading-relaxed pt-10"
+              transition={{ duration: 0.8 }}
             >
+              Thực Tiễn <span className="text-red-700">Việt Nam</span>
+            </motion.h2>
+            <motion.div
+              className="h-1 bg-gradient-to-r from-red-700 via-red-600 to-transparent\"
+              initial={{ width: 0 }}
+              whileInView={{ width: "75%" }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
+            />
+            <p className="text-xl text-gray-800 leading-relaxed max-w-3xl italic text-left">
               Vận dụng sáng tạo chủ nghĩa Mác - Lênin, Chủ tịch Hồ Chí Minh khẳng định:
               <br />
               "Độc lập dân tộc gắn liền với Chủ nghĩa xã hội."
-            </motion.p>
-
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="flex flex-wrap gap-6 justify-center"
-            >
-              <motion.button
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: 'instant' });
-                  onViewChange?.('theory');
-                }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-12 py-6 bg-red-700 text-white text-xl font-bold hover:bg-red-800 transition-colors cursor-pointer\ rounded-lg"
-              >
-                Đọc Toàn Bộ Lý Thuyết
-              </motion.button>
-              <motion.button
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: 'instant' });
-                  onViewChange?.('theory');
-                }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-12 py-6 bg-[#1F2937] text-white border-2 border-gray-700 text-xl font-bold hover:bg-[#111827] transition-colors duration-300 cursor-pointer rounded-lg "
-              >
-                Xem Tài Liệu Tham Khảo
-              </motion.button>
-            </motion.div>
-            <motion.button
-              onClick={() => window.open("https://test-mln111.vercel.app/", "_blank")}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-12 py-6 bg-transparent border-2 border-gray-700 text-gray-900 text-xl font-bold hover:bg-gray-100 transition-colors cursor-pointer rounded-lg text-center mt-10 block mx-auto"
-            >
-              Hành trình đi tìm căn cước
-            </motion.button>
-
+            </p>
           </AnimatedSection>
+          <div className="grid gap-10 max-w-5xl mx-auto">
+
+            {/* Card 1 */}
+
+
+            {/* Highlight Quote */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="bg-white border border-red-200 rounded-xl p-10 text-center shadow-md"
+            >
+              <p className="text-2xl md:text-3xl font-bold text-red-700 italic leading-relaxed w-3/4 mx-auto">
+                “Đại đoàn kết dân tộc là đường lối chiến lược
+                của cách mạng Việt Nam”
+              </p>
+            </motion.div>
+
+          </div>
         </div>
       </section>
       {/* Gradient Transition Layer */}
-      <div className="h-32 relative">
+      {/* <div className="h-32 relative">
         <motion.div
           className="absolute inset-0 bg-gradient-to-b from-black/30 via-amber-900/20 to-transparent"
           initial={{ opacity: 0 }}
@@ -1180,7 +1144,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
             ease: "easeInOut"
           }}
         />
-      </div>
+      </div> */}
       {/* Combined Quiz Section - 10 Random Questions */}
       <section id="combined-quiz" className="py-32 px-6 bg-gradient-to-b from-amber-50 via-orange-50 to-amber-50">
         <div className="max-w-7xl mx-auto">

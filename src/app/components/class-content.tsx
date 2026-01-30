@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'motion/react';
 import { ChevronRight, BookOpen, Users, TrendingUp, Zap, CheckCircle, XCircle } from 'lucide-react';
 import dauTranhGiaiCap from '../../assets/images/dautranhgiaicap.jpg';
-import vidu from '../../assets/images/image.png';
+import vidu from '../../assets/images/kinhte.jpg';
 import giaicap from '../../assets/images/giaicap.jpg';
 
 interface Question {
@@ -623,7 +623,7 @@ transition-all duration-300 cursor-pointer"
 
             <div className="flex relative">
                 {/* Left Sidebar - Table of Contents */}
-                <aside className="fixed left-0 top-24 h-[calc(100vh-6rem)] w-56 overflow-y-auto hidden lg:block pt-8 pl-4 pr-4 bg-gradient-to-b from-amber-50/50 to-transparent border-r border-orange-200 z-30">
+                <aside className="fixed left-0 top-24 h-140 w-56 overflow-y-auto hidden lg:block pt-8 pl-4 pr-4 bg-gradient-to-b from-amber-50/50 to-transparent border-r border-b border-orange-200 z-30">
                     <div className="space-y-2">
                         <h3 className="text-sm font-black text-gray-700 uppercase tracking-widest mb-6 px-2">
                             Mục Lục

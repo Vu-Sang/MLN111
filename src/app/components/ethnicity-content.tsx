@@ -612,7 +612,7 @@ transition-all duration-300 cursor-pointer"
                   Các Hình Thức Cộng Đồng Người Trước Khi Hình Thành Dân Tộc
                 </motion.h3>
 
-                <p className="text-gray-300 mb-8 leading-relaxed">
+                <p className="text-black italic mb-8 leading-relaxed">
                   Lịch sử phát triển của các cộng đồng người trải qua các hình thức từ thấp đến cao,
                   phản ánh sự phát triển của lực lượng sản xuất và quan hệ sản xuất:
                 </p>
