@@ -844,10 +844,10 @@ transition-all duration-300 cursor-pointer"
                                         <h4 className="text-2xl font-bold text-red-700 mb-4">Xã Hội Phong Kiến</h4>
                                         <div className="space-y-3 text-gray-800">
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Giai cấp cơ bản:</span> Tầng chủ phong kiến và giai cấp nông dân
+                                                • <span className="font-bold">Giai cấp cơ bản (Đối kháng):</span> Địa chủ phong kiến & Nông dân.
                                             </p>
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Giai cấp không cơ bản:</span> Thương nhân, thợ thủ công, chính quyền
+                                                • <span className="font-bold">Giai cấp không cơ bản:</span> Thương nhân, thợ thủ công.
                                             </p>
                                         </div>
                                     </div>
@@ -856,25 +856,29 @@ transition-all duration-300 cursor-pointer"
                                         <h4 className="text-2xl font-bold text-red-700 mb-4">Xã Hội Tư Bản Chủ Nghĩa</h4>
                                         <div className="space-y-3 text-gray-800">
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Giai cấp cơ bản:</span> Tầng chủ tư bản và giai cấp công nhân vô sản
+                                                • <span className="font-bold">Giai cấp cơ bản (Đối kháng):</span>    Giai cấp Tư sản & Giai cấp Công nhân (Vô sản).
                                             </p>
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Tầng lớp trung gian:</span> Tiểu tư sản, trí thức, nông dân bé
+                                                • <span className="font-bold">Tầng lớp trung gian:</span> Tiểu tư sản, trí thức, nông dân.
                                             </p>
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Đặc điểm:</span> Lực lượng sản xuất phát triển, nhất là công nghiệp
+                                                • <span className="font-bold">Đặc điểm:</span>  Lực lượng sản xuất phát triển mạnh (công nghiệp hóa); bóc lột giá trị thặng dư.
                                             </p>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <h4 className="text-2xl font-bold text-red-700 mb-4">Xã Hội Chủ Nghĩa</h4>
+                                        <h4 className="text-2xl font-bold text-red-700 mb-4">Thời kỳ quá độ lên CNXH</h4>
                                         <div className="space-y-3 text-gray-800">
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Xóa bỏ giai cấp:</span> Quan hệ tư hữu được thay thế bằng tất cả nhân dân cùng sở hữu tư liệu sản xuất
+                                                • <span className="font-bold">Cơ cấu:</span> Liên minh Công - Nông - Trí thức (không còn đối kháng giai cấp).
                                             </p>
                                             <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
-                                                • <span className="font-bold">Sự thống nhất:</span> Lao động phát triển, giữa lao động trí óc và lao động chân tay xóa mờ
+                                                • <span className="font-bold">Tính chất: </span> Các giai cấp biến đổi theo hướng xích lại gần nhau về lợi ích và địa vị.
+                                            </p>
+                                              <p className="bg-orange-100 p-4 border-l-4 border-red-700 rounded">
+                                                • <span className="font-bold">Mục tiêu: </span>  Xóa bỏ chế độ tư hữu, thiết lập chế độ công hữu để tiến tới xã hội không còn giai cấp.
+
                                             </p>
                                         </div>
                                     </div>
