@@ -919,7 +919,7 @@ transition-all duration-300 cursor-pointer"
                                 Kiểm Tra Kết Thúc
                             </motion.h3>
                             <p className="text-center text-black-200 mb-8 max-w-2xl mx-auto">
-                                Hoàn thành bài kiểm tra gồm 15 câu hỏi để kiểm tra kiến thức của bạn về dân tộc và chủ nghĩa Mác - Lênin
+                                Hoàn thành bài kiểm tra gồm 5 câu hỏi để kiểm tra kiến thức của bạn về dân tộc và chủ nghĩa Mác - Lênin
                             </p>
                             <QuizComponent />
                         </ContentSection>

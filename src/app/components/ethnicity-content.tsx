@@ -725,6 +725,15 @@ transition-all duration-300 cursor-pointer"
                           lối sống, giá trị tinh thần chung và ý thức dân tộc.
                         </p>
                       </div>
+                      <div className="bg-orange-100 p-6 border-l-4 border-red-700">
+                        <div className="flex items-center gap-3 mb-3">
+                          <Flag className="w-6 h-6 text-red-700" />
+                          <p className="font-bold text-gray-900">Cộng Đồng Về Nhà Nước và Pháp Luật</p>
+                        </div>
+                        <p className="text-gray-800">
+                          Đây là đặc trưng để phân biệt dân tộc - quốc gia với các dân tộc - tộc người (như các dân tộc thiểu số). Dân tộc luôn gắn liền với một nhà nước và hệ thống pháp luật thống nhất để quản lý xã hội; dân tộc-quốc gia-nhà nước là thống nhất không thể tách rời. Dân tộc nào cũng có một nhà nước nhất định và nhà nước nào cũng là của một dân tộc nhất định.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -781,7 +790,7 @@ transition-all duration-300 cursor-pointer"
                     <div className="bg-orange-100 p-6 border-l-4 border-red-700">
                       <p className="text-gray-800 leading-relaxed">
                         Dân tộc Việt Nam hình thành từ thế kỷ 7-8, gắn liền với khả năng chinh phục và khai thác
-                        các vùng đồng bằng Hồng River. Sự phát triển kinh tế nông nghiệp, ngôn ngữ Việt thống nhất,
+                        các vùng đồng bằng Sông Hồng. Sự phát triển kinh tế nông nghiệp, ngôn ngữ Việt thống nhất,
                         chống lại sự xâm lược của các nước khác (trường kỳ ngoại xâm) đã tạo ra dân tộc Việt Nam
                         với bản sắc riêng và ý thức dân tộc mạnh mẽ.
                       </p>
