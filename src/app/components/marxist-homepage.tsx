@@ -1002,7 +1002,6 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               <motion.div
                 whileHover={{ y: -16 }}
                 transition={{ duration: 0.4 }}
-                onClick={() => navigateToSection('/class-content#sodotuduy', onViewChange)}
                 className="group cursor-pointer relative overflow-hidden rounded-2xl border border-red-700/30 shadow-lg"
               >
                 <img
@@ -1027,7 +1026,6 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               <motion.div
                 whileHover={{ y: -16 }}
                 transition={{ duration: 0.4 }}
-                onClick={() => navigateToSection('/ethnicity-content#sodotuduy', onViewChange)}
                 className="group cursor-pointer relative overflow-hidden rounded-2xl border border-gray-700/30 shadow-lg"
               >
                 <img
