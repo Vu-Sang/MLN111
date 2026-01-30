@@ -486,6 +486,36 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
     requestAnimationFrame(scroll);
   };
 
+  // Lightbox state & handlers for mindmap images
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; alt?: string; title?: string } | null>(null);
+
+  const openLightbox = (src: string, title?: string, alt?: string) => {
+    setLightboxImage({ src, title, alt });
+  };
+
+  const closeLightbox = () => setLightboxImage(null);
+
+  // Lock body scroll when lightbox open
+  useEffect(() => {
+    if (lightboxImage) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [lightboxImage]);
+
+  // Close on Escape key
+  useEffect(() => {
+    if (!lightboxImage) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeLightbox();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightboxImage]);
+
   return (
     <div ref={containerRef} className="bg-gradient-to-b from-amber-50 to-orange-50 text-gray-900">
       <motion.nav
@@ -553,7 +583,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Khám phá
+              Thực Tiễn
             </motion.button>
             <motion.button
               onClick={() => scrollToSection('combined-quiz')}
@@ -788,15 +818,15 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
             {[
               {
                 number: "01",
-                title: "Đấu tranh giai cấp",
-                description: "Là cuộc đấu tranh của các tập đoàn người to lớn có lợi ích căn bản đối lập nhau. Thực chất là cuộc đấu tranh của quần chúng bị áp bức chống lại giai cấp thống trị.",
+                title: "Giai Cấp",
+                description: "Tìm hiểu về định nghĩa, nguồn gốc, hình thành giai cấp, đấu tranh giai cấp và cấu trúc giai cấp trong các chế độ khác nhau ",
                 icon: Users,
                 view: 'class'
               },
               {
                 number: "02",
                 title: "Dân tộc ",
-                description: "Dân tộc là hình thức cộng đồng người cao nhất, được hình thành trên cơ sở lãnh thổ, kinh tế, ngôn ngữ và văn hóa, trong đó kinh tế giữ vai trò quyết định.",
+                description: "Tìm hiểu về khái niệm dân tộc, các hình thức cộng đồng người, đặc trưng cơ bản, quá trình hình thành và mối quan hệ giai cấp - dân tộc.",
                 icon: TrendingUp,
                 view: 'ethnicity'
               },
@@ -812,7 +842,7 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                   window.scrollTo({ top: 0, behavior: 'instant' });
                   onViewChange?.(concept.view as ViewType);
                 }}
-                className="group relative bg-gradient-to-br from-orange-100 to-amber-50 p-12 md:p-14 border border-gray-500 hover:border-red-700 transition-all duration-500 cursor-pointer overflow-hidden shadow-sm hover:shadow-lg rounded-xl"
+                className="group relative bg-gradient-to-br from-orange-100 to-amber-50 p-12 md:p-14 border border-red-800 hover:border-red-700 transition-all duration-500 cursor-pointer overflow-hidden shadow-sm hover:shadow-lg rounded-xl"
               >
 
                 <motion.div
@@ -1003,6 +1033,9 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                 whileHover={{ y: -16 }}
                 transition={{ duration: 0.4 }}
                 className="group cursor-pointer relative overflow-hidden rounded-2xl border border-red-700/30 shadow-lg"
+                onClick={() => openLightbox(giaicap, '', 'Sơ đồ tư duy Giai cấp')}
+                role="button"
+                aria-label="Open Giai Cấp mindmap"
               >
                 <img
                   src={giaicap}
@@ -1027,6 +1060,9 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
                 whileHover={{ y: -16 }}
                 transition={{ duration: 0.4 }}
                 className="group cursor-pointer relative overflow-hidden rounded-2xl border border-gray-700/30 shadow-lg"
+                onClick={() => openLightbox(dantoc, '', 'Sơ đồ tư duy Dân tộc')}
+                role="button"
+                aria-label="Open Dân Tộc mindmap"
               >
                 <img
                   src={dantoc}
@@ -1050,6 +1086,55 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
           </AnimatedSection>
         </div>
       </section>
+
+      {/* Lightbox modal */}
+      {lightboxImage && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center p-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={closeLightbox}
+          aria-modal="true"
+          role="dialog"
+        >
+          <motion.div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            onClick={closeLightbox}
+          />
+
+          <motion.figure
+            className="relative z-10 max-w-[90%] max-h-[90%] rounded-lg overflow-hidden"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <motion.img
+              src={lightboxImage.src}
+              alt={lightboxImage.alt || lightboxImage.title}
+              className="w-full h-auto max-h-[80vh] object-contain bg-black"
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.4 }}
+            />
+            {lightboxImage.title && (
+              <figcaption className="p-4 text-center text-white bg-black/40">
+                {lightboxImage.title}
+              </figcaption>
+            )}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-3 right-3 p-2 rounded-full bg-black/60 text-white hover:bg-black/80"
+              aria-label="Close"
+            >
+              <XCircle className="w-6 h-6" />
+            </button>
+          </motion.figure>
+        </motion.div>
+      )}
 
       {/* Gradient Transition Layer */}
       {/* <div className="h-32 relative">
@@ -1075,11 +1160,11 @@ export function MarxistHomepage({ onViewChange }: { onViewChange?: (view: 'home'
       <section id="cta"
         style={{
           backgroundImage: `url(${thuctien})`,
-          backgroundSize: "cover",
+          backgroundSize: "contain",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
-        className="relative py-32 px-6 aspect-[16/9] overflow-hidden">
+        className="relative py-32 px-6 h-200 overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10 h-150 " >
           <AnimatedSection className="mb-20">
             <motion.h2
